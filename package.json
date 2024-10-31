@@ -1,0 +1,14 @@
+{
+  "name": "testingsetup",
+  "version": "1.0.0",
+  "description": "Testing development env",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hammad",
+  "license": "ISC",
+  "dependencies": {
+    "testingsetup": "file:"
+  }
+}
