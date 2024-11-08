@@ -4,6 +4,7 @@ const {getAll,getOne,updateOne,deleteOne,createUser} =require('../controller/use
 
 
 router.route('/').get(getAll).post(createUser)
+router.route('/:id').patch(updateOne).delete(deleteOne)
 
 
 module.exports= router

@@ -3,19 +3,19 @@ const User = require("../model/userModel");
 //get all users
 const getAll = async (req, res) => {
   try {
-
-    //   const users = await User.find();
-
-    //   if (!users) throw new Error("data not found");
-
-    //   res.status(200).json(users);
-    // } catch (err) {
-    //   res.status(500).json({
-    //     success: false,
-    //     message: err.message,
-    //   });
-  } catch (eer) {
-    console.log(eer);
+    const userdata=await User.find()
+    if(!userdata){
+      throw new Error("No record find")
+    }
+    res.status(201).json({
+      status:true,
+      data:userdata
+    })
+  } catch (error) {
+    res.status(400).json({
+      status:false,
+      msg:error.message
+    })
   }
 };
 
@@ -24,15 +24,16 @@ const getAll = async (req, res) => {
 const getOne = async (req, res) => {
   try {
     const { id } = req.params.id;
-    const user = await User.findById({ id });
-    if (!user) throw new Error("user not found");
+    const userdata = await User.findById({ id });
+    if (!userdata) throw new Error("user not found");
     res.status(200).json({
-      status: false,
+      status: true,
+      data:userdata,
     });
   } catch (err) {
     res.status(500).json({
-      success: false,
-      message: err.message,
+      status: false,
+      msg: err.message,
     });
   }
 };
@@ -40,6 +41,7 @@ const getOne = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    console.log(name)
     const userdata= await User.create({name,email,password})
     if (!userdata){
       throw new Error("Unable to create user")
@@ -58,23 +60,20 @@ const createUser = async (req, res) => {
 }
 //update users
 const updateOne = async (req, res) => {
-  const { id } = req.params;
+  const id  = req.params.id;
   try {
     const { name, email, password } = req.body;
-    const updateUser = await User.findByIdAndUpdate(
+    const userdata = await User.findByIdAndUpdate(
       id,
-      { name, email, password },
-      {
-        new: true,
-      }
+      req.body
     );
 
-    if (!updateUser) {
+    if (!userdata) {
       throw new Error("user not found");
     }
     res.status(200).json({
-      success: true,
-      data: updateUser,
+      status: true,
+      data: userdata,
     });
   } catch (err) {
     res.status(500).json({

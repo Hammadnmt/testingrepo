@@ -5,7 +5,13 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 const userrouter =require('./routes/userRoute')
 
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI)
+.then((result) => {
+    console.log("Db connected")
+    
+}).catch((err) => {
+    console.log(err)
+});
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
