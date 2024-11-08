@@ -3,22 +3,21 @@ const User = require("../model/userModel");
 //get all users
 const getAll = async (req, res) => {
   try {
-    const userdata=await User.find()
-    if(!userdata){
-      throw new Error("No record find")
+    const userdata = await User.find();
+    if (!userdata) {
+      throw new Error("No record find");
     }
     res.status(201).json({
-      status:true,
-      data:userdata
-    })
+      status: true,
+      data: userdata,
+    });
   } catch (error) {
     res.status(400).json({
-      status:false,
-      msg:error.message
-    })
+      status: false,
+      msg: error.message,
+    });
   }
 };
-
 
 //get user
 const getOne = async (req, res) => {
@@ -28,7 +27,7 @@ const getOne = async (req, res) => {
     if (!userdata) throw new Error("user not found");
     res.status(200).json({
       status: true,
-      data:userdata,
+      data: userdata,
     });
   } catch (err) {
     res.status(500).json({
@@ -41,32 +40,28 @@ const getOne = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    console.log(name)
-    const userdata= await User.create({name,email,password})
-    if (!userdata){
-      throw new Error("Unable to create user")
+    console.log(name);
+    const userdata = await User.create({ name, email, password });
+    if (!userdata) {
+      throw new Error("Unable to create user");
     }
     res.status(201).json({
       status: true,
-      data: userdata
-    })
-    }
-     catch (error) {
-      res.status(400).json({
-        status: false,
-        msg: error.message,
-      })
-  };
-}
+      data: userdata,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: error.message,
+    });
+  }
+};
 //update users
 const updateOne = async (req, res) => {
-  const id  = req.params.id;
+  const id = req.params.id;
   try {
     const { name, email, password } = req.body;
-    const userdata = await User.findByIdAndUpdate(
-      id,
-      req.body
-    );
+    const userdata = await User.findByIdAndUpdate(id, req.body);
 
     if (!userdata) {
       throw new Error("user not found");
@@ -107,5 +102,5 @@ module.exports = {
   getOne,
   updateOne,
   deleteOne,
-  createUser
+  createUser,
 };
