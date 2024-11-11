@@ -1,5 +1,7 @@
 const Product = require('../model/productModel')
 
+
+
 //get all users
 const getAll = async (req, res) => {
   try {
@@ -19,6 +21,8 @@ const getAll = async (req, res) => {
   }
 };
 
+
+
 //get user
 const getOne = async (req, res) => {
   try {
@@ -36,6 +40,8 @@ const getOne = async (req, res) => {
     });
   }
 };
+
+
 
 const createProduct = async (req, res) => {
   try {
@@ -57,6 +63,9 @@ const createProduct = async (req, res) => {
   }
 };
 
+
+
+
 //update users
 const updateOne = async (req, res) => {
   const id = req.params.id;
@@ -77,6 +86,9 @@ const updateOne = async (req, res) => {
     });
   }
 };
+
+
+
 //del user
 const deleteOne = async (req, res) => {
   const { id } = req.params;
@@ -97,6 +109,9 @@ const deleteOne = async (req, res) => {
     });
   }
 };
+
+
+
 module.exports = {
   getAll,
   getOne,
