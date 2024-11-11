@@ -1,15 +1,15 @@
-const User = require("../model/userModel");
+const Product = require('../model/productModel')
 
 //get all users
 const getAll = async (req, res) => {
   try {
-    const userdata = await User.find();
-    if (!userdata) {
-      throw new Error("No record find");
+    const productdata = await Product.find();
+    if (!productdata) {
+      throw new Error("Product not found");
     }
     res.status(201).json({
       status: true,
-      data: userdata,
+      data: productdata,
     });
   } catch (error) {
     res.status(400).json({
@@ -23,11 +23,11 @@ const getAll = async (req, res) => {
 const getOne = async (req, res) => {
   try {
     const { id } = req.params.id;
-    const userdata = await User.findById({ id });
-    if (!userdata) throw new Error("user not found");
+    const productdata = await User.findById({ id });
+    if (!productdata) throw new Error("Product not found");
     res.status(200).json({
       status: true,
-      data: userdata,
+      data: productdata,
     });
   } catch (err) {
     res.status(500).json({
@@ -37,17 +37,17 @@ const getOne = async (req, res) => {
   }
 };
 
-const createUser = async (req, res) => {
+const createProduct = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name,quantity} = req.body;
     console.log(name);
-    const userdata = await User.create({ name, email, password });
-    if (!userdata) {
-      throw new Error("Unable to create user");
+    const productdata = await Product.create({ name, quantity });
+    if (!productdata) {
+      throw new Error("Unable to create product");
     }
     res.status(201).json({
       status: true,
-      data: userdata,
+      data: productdata,
     });
   } catch (error) {
     res.status(400).json({
@@ -56,19 +56,19 @@ const createUser = async (req, res) => {
     });
   }
 };
+
 //update users
 const updateOne = async (req, res) => {
   const id = req.params.id;
   try {
-    const { name, email, password } = req.body;
-    const userdata = await User.findByIdAndUpdate(id, req.body);
+    const productdata = await Product.findByIdAndUpdate(id, req.body);
 
-    if (!userdata) {
-      throw new Error("user not found");
+    if (!productdata) {
+      throw new Error("Product not found");
     }
     res.status(200).json({
       status: true,
-      data: userdata,
+      data: productdata,
     });
   } catch (err) {
     res.status(500).json({
@@ -81,14 +81,14 @@ const updateOne = async (req, res) => {
 const deleteOne = async (req, res) => {
   const { id } = req.params;
   try {
-    const deleteUser = await User.findByIdAndDelete(id);
+    const deleteProduct = await Product.findByIdAndDelete(id);
 
-    if (!deleteUser) {
-      throw new Error("user not found");
+    if (!deleteProduct) {
+      throw new Error("Product not found");
     }
     res.status(200).json({
       success: true,
-      data: deleteUser,
+      data: deleteProduct,
     });
   } catch (err) {
     res.status(500).json({
@@ -102,5 +102,5 @@ module.exports = {
   getOne,
   updateOne,
   deleteOne,
-  createUser,
+  createProduct,
 };
