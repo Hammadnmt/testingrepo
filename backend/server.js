@@ -1,8 +1,11 @@
 const express = require('express')
 const app = express()
-const PORT = process.env.PORT || 3000
-const mongoose = require('mongoose');
+
 require('dotenv').config()
+const PORT = process.env.PORT || 3000
+
+const mongoose = require('mongoose');
+
 const productrouter = require('./routes/productRoute')
 const authrouter = require('./routes/authRoute')
 
