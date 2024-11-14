@@ -1,10 +1,10 @@
 const express = require('express');
 const router=express.Router()
-const {getAll,getOne,updateOne,deleteOne,createProduct} =require('../controller/productController')
+const {getAllProducts,getOneProduct,updateProduct,deleteProduct,createProduct} =require('../controller/productController')
 const validateToken =require('../middleware/authMiddleware')
 
-router.route('/').get(getAll).post(validateToken,createProduct)
-router.route('/:id').patch(validateToken,updateOne).delete(validateToken,deleteOne)
+router.route('/').get(getAllProducts).post(createProduct)
+router.route('/:id').get(getOneProduct).patch(updateProduct).delete(deleteProduct)
 
 
 module.exports= router

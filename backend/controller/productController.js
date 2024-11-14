@@ -1,121 +1,117 @@
-const Product = require('../model/productModel')
-
-
+const Product = require("../model/productModel");
 
 //get all users
-const getAll = async (req, res) => {
+const getAllProducts = async (req, res) => {
   try {
     const productdata = await Product.find();
-    if (!productdata) {
-      throw new Error("Product not found");
+    if (productdata.length == 0) {
+      throw new Error("No Products Found");
+    } else {
+      res.status(201).json({
+        status: true,
+        data: productdata,
+      });
     }
-    res.status(201).json({
-      status: true,
-      data: productdata,
-    });
   } catch (error) {
     res.status(400).json({
       status: false,
-      msg: error.message,
+      message: error.message,
     });
   }
 };
-
-
 
 //get user
-const getOne = async (req, res) => {
+const getOneProduct = async (req, res) => {
   try {
-    const { id } = req.params.id;
-    const productdata = await User.findById({ id });
-    if (!productdata) throw new Error("Product not found");
-    res.status(200).json({
-      status: true,
-      data: productdata,
-    });
+    const productdata = await Product.findById(req.params.id);
+    if (productdata == null) {
+      throw new Error("No Product Found");
+    } else {
+      res.status(200).json({
+        status: true,
+        data: productdata,
+      });
+    }
   } catch (err) {
-    res.status(500).json({
+    res.status(400).json({
       status: false,
-      msg: err.message,
+      message: err.message,
     });
   }
 };
 
-
-
+// create product
 const createProduct = async (req, res) => {
   try {
-    const { name,quantity} = req.body;
-    console.log(name);
+    const { name, quantity } = req.body;
     const productdata = await Product.create({ name, quantity });
-    if (!productdata) {
+    if (productdata == null) {
       throw new Error("Unable to create product");
+    } else {
+      res.status(201).json({
+        status: true,
+        message: "Product created Successfully",
+        data: productdata,
+      });
     }
-    res.status(201).json({
-      status: true,
-      data: productdata,
-    });
   } catch (error) {
     res.status(400).json({
       status: false,
-      msg: error.message,
+      message: error.message,
     });
   }
 };
-
-
-
 
 //update users
-const updateOne = async (req, res) => {
-  const id = req.params.id;
+const updateProduct = async (req, res) => {
   try {
-    const productdata = await Product.findByIdAndUpdate(id, req.body);
-
-    if (!productdata) {
-      throw new Error("Product not found");
+    const { name, quantity } = req.body;
+    const id = req.params.id;
+    const productdata = await Product.findByIdAndUpdate(id, { name, quantity });
+    console.log(productdata)
+    if (productdata == null) {
+      throw new Error("No Product Found");
+    } else {
+      const updateddata = await Product.findById(id);
+      res.status(200).json({
+        status: true,
+        message: "Product Updated Successfully",
+        data: updateddata != null ? updateddata : null,
+      });
     }
-    res.status(200).json({
-      status: true,
-      data: productdata,
-    });
   } catch (err) {
-    res.status(500).json({
-      success: false,
-      messsage: err.message,
+    res.status(400).json({
+      status: false,
+      message: err.message,
     });
   }
 };
 
-
-
-//del user
-const deleteOne = async (req, res) => {
-  const { id } = req.params;
+//delete user
+const deleteProduct = async (req, res) => {
   try {
-    const deleteProduct = await Product.findByIdAndDelete(id);
-
-    if (!deleteProduct) {
-      throw new Error("Product not found");
+    const deleteProduct = await Product.findByIdAndDelete(req.params.id);
+    if (deleteProduct == null) {
+      throw new Error("No Product Found");
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "Product deleted Successfully",
+      });
     }
-    res.status(200).json({
-      success: true,
-      data: deleteProduct,
-    });
   } catch (err) {
-    res.status(500).json({
-      success: false,
-      messsage: err.message,
+    res.status(400).json({
+      status: false,
+      message: err.message,
     });
   }
 };
 
-
-
+// exports
 module.exports = {
-  getAll,
-  getOne,
-  updateOne,
-  deleteOne,
+  getAllProducts,
+  getOneProduct,
+  updateProduct,
+  deleteProduct,
   createProduct,
 };
