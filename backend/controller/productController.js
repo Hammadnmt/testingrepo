@@ -68,7 +68,6 @@ const updateProduct = async (req, res) => {
     const { name, quantity } = req.body;
     const id = req.params.id;
     const productdata = await Product.findByIdAndUpdate(id, { name, quantity });
-    console.log(productdata)
     if (productdata == null) {
       throw new Error("No Product Found");
     } else {

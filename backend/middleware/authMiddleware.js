@@ -1,32 +1,24 @@
-const jwt = require('jsonwebtoken');
-const asynchandler = require('express-async-handler');
+const asynchandler = require("express-async-handler");
+const tokenVerify = require("../utils/vrfyToken");
 
 const validateToken = asynchandler(async (req, res, next) => {
-    try {
-    let token;
-    let authHeader = req.headers.authorization; // Corrected the header name
-    console.log(authHeader)
-        if (authHeader && authHeader.startsWith("Bearer")) {
-            token = authHeader.split(" ")[1];
-            jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, (err, decoded) => {
-                if (err) {
-                    throw new Error("User is not authorized or Token Expired");
-                }
-                req.user = decoded.user;
-                console.log(req.user);
-                
-            });
-            next();
-        }
-        else{
-            throw new Error("User not authorized or Token Expired")
-        }
-    } catch (error) {
-        res.status(401).json({
-            message:error.message
-        })
+  try {
+    // Retrieve the authentication token from cookies
+    let authToken = req.cookies?.authToken; // Corrected the header name
+
+    if (!authToken) {
+      throw new Error("User not authorized or Token Expired");
+    } else {
+      // Verifying the user
+      req.user = tokenVerify(authToken);
+      next();
     }
-    
+  } catch (error) {
+    // respoding with unauthorzed
+    res.status(401).json({
+      message: error.message,
+    });
+  }
 });
 
 module.exports = validateToken;
