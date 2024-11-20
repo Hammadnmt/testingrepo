@@ -21,7 +21,11 @@ const login = async (req, res) => {
           { expiresIn: "15m" }
         );
         res.setHeader("X-Set-Cookie", `accessToken=${accessToken}`, "SameSite=Strict");
-        res.status(201).json({ accessToken });
+        res.status(201).json({
+          accessToken,
+          email:userdata.email,
+          role:userdata.role,
+        });
       }else{
       throw new Error("Enter Valid Email and Password")
     }
@@ -35,11 +39,12 @@ const login = async (req, res) => {
 };
 const signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password,role } = req.body;
     const userdata = await User.create({
       name,
       email,
       password,
+      role,
     });
 
     if (userdata) {

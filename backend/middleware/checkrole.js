@@ -6,10 +6,6 @@ const checkRole = asynchandler(async (req, res, next) => {
     if (role != "Admin") {
       throw new Error("Permission Denied");
     } else {
-        res.status(200).json({
-            status:true,
-            message:"permitted"
-        })
         next();
     }
   } catch (error) {
