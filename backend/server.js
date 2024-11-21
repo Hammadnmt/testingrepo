@@ -20,8 +20,8 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 app.use(morgen("dev"));
+
 app.use("/product", productrouter);
 app.use("/auth", authrouter);
 

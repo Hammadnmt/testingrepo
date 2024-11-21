@@ -9,15 +9,16 @@ const {
 } = require("../controller/productController");
 const validateToken = require("../middleware/authMiddleware");
 const checkRole = require("../middleware/checkrole");
+const productSchema = require("../middleware/prdValidator");
 
 router
   .route("/")
   .get(validateToken, checkRole, getAllProducts)
-  .post(validateToken, checkRole, createProduct);
+  .post(validateToken, checkRole, productSchema, createProduct);
 router
   .route("/:id")
   .get(validateToken, checkRole, getOneProduct)
-  .patch(validateToken, checkRole, updateProduct)
+  .patch(validateToken, checkRole, productSchema, updateProduct)
   .delete(validateToken, checkRole, deleteProduct);
 
 module.exports = router;
