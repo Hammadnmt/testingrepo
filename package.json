@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
-    "test": ""
+    "test": "jest"
   },
   "author": "Hammad",
   "license": "ISC",
@@ -28,6 +28,7 @@
     "testingsetup": "file:"
   },
   "devDependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }

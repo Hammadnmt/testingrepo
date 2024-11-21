@@ -28,3 +28,4 @@ app.use("/auth", authrouter);
 app.listen(PORT, () => {
   console.log(`Server on http://localhost:${PORT}`);
 });
+module.exports=app

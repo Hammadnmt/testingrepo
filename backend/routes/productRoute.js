@@ -13,7 +13,8 @@ const productSchema = require("../middleware/prdValidator");
 
 router
   .route("/")
-  .get(validateToken, checkRole, getAllProducts)
+  // .get(validateToken, checkRole, getAllProducts)
+  .get(getAllProducts)
   .post(validateToken, checkRole, productSchema, createProduct);
 router
   .route("/:id")
