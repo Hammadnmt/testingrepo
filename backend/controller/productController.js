@@ -67,15 +67,20 @@ const updateProduct = async (req, res) => {
   try {
     const { name, quantity } = req.body;
     const id = req.params.id;
-    const productdata = await Product.findByIdAndUpdate(id, { name, quantity });
+    const productdata = await Product.findByIdAndUpdate(
+      id,
+      { name, quantity },
+      {
+        new: true,
+      }
+    );
     if (productdata == null) {
       throw new Error("No Product Found");
     } else {
-      const updateddata = await Product.findById(id);
       res.status(200).json({
         status: true,
         message: "Product Updated Successfully",
-        data: updateddata != null ? updateddata : null,
+        data: productdata,
       });
     }
   } catch (err) {
@@ -94,7 +99,7 @@ const deleteProduct = async (req, res) => {
       throw new Error("No Product Found");
     } else {
       res.status(200).json({
-        success: true,
+        status: true,
         message: "Product deleted Successfully",
       });
     }

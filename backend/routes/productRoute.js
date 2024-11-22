@@ -15,11 +15,18 @@ router
   .route("/")
   // .get(validateToken, checkRole, getAllProducts)
   .get(getAllProducts)
-  .post(validateToken, checkRole, productSchema, createProduct);
+  // .post(validateToken, checkRole, productSchema, createProduct);
+  .post(createProduct);
+
 router
   .route("/:id")
-  .get(validateToken, checkRole, getOneProduct)
-  .patch(validateToken, checkRole, productSchema, updateProduct)
-  .delete(validateToken, checkRole, deleteProduct);
+  // .get(validateToken, checkRole, getOneProduct)
+  .get(getOneProduct)
+
+  // .patch(validateToken, checkRole, productSchema, updateProduct)
+  .patch(updateProduct)
+
+  // .delete(validateToken, checkRole, deleteProduct);
+  .delete(deleteProduct);
 
 module.exports = router;
