@@ -7,26 +7,26 @@ const {
   deleteProduct,
   createProduct,
 } = require("../controller/productController");
+
 const validateToken = require("../middleware/authMiddleware");
 const checkRole = require("../middleware/checkrole");
-const productSchema = require("../middleware/prdValidator");
+const productSchema = require("../validator/prdValidator");
+const errorHandler = require("../middleware/errorMiddleware");
 
 router
   .route("/")
-  // .get(validateToken, checkRole, getAllProducts)
+  // .get(errorHandler, validateToken, checkRole, getAllProducts)
   .get(getAllProducts)
-  // .post(validateToken, checkRole, productSchema, createProduct);
+  // .post(errorHandler, validateToken, checkRole, productSchema, createProduct);
   .post(createProduct);
 
 router
   .route("/:id")
-  // .get(validateToken, checkRole, getOneProduct)
+  // .get(errorHandler, validateToken, checkRole, getOneProduct)
   .get(getOneProduct)
-
-  // .patch(validateToken, checkRole, productSchema, updateProduct)
+  // .patch(errorHandler, validateToken, checkRole, updateProduct)
   .patch(updateProduct)
-
-  // .delete(validateToken, checkRole, deleteProduct);
+  // .delete(errorHandler, validateToken, checkRole, deleteProduct);
   .delete(deleteProduct);
 
 module.exports = router;

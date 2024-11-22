@@ -51,8 +51,20 @@ const signup = async (req, res) => {
     });
   }
 };
+const logout = (req, res) => {
+  // Clear the 'authToken' cookie
+  res.clearCookie("authToken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+
+  // Send a response to confirm logout
+  res.status(200).json({ message: "Logged out successfully" });
+};
 
 module.exports = {
   login,
   signup,
+  logout,
 };

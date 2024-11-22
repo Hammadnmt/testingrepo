@@ -46,9 +46,8 @@ test("should update products", async () => {
   const response = await request(app).patch("/product/12121212122");
   expect(response.statusCode).toBe(200);
   expect(response.body.status).toBeTruthy();
-  expect(response.body).toHaveProperty("message")
+  expect(response.body).toHaveProperty("message");
   expect(response.body).toHaveProperty("data");
-  ;
   //expect(response.body).toHaveProperty("data");
 });
 

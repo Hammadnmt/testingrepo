@@ -1,7 +1,7 @@
 const Product = require("../model/productModel");
 
 //get all users
-const getAllProducts = async (req, res) => {
+const getAllProducts = async (req, res, next) => {
   try {
     const productdata = await Product.find();
     if (productdata.length == 0) {
@@ -13,15 +13,16 @@ const getAllProducts = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(400).json({
-      status: false,
-      message: error.message,
-    });
+    // res.status(400).json({
+    //   status: false,
+    //   message: error.message,
+    // });
+    next(err);
   }
 };
 
 //get user
-const getOneProduct = async (req, res) => {
+const getOneProduct = async (req, res, next) => {
   try {
     const productdata = await Product.findById(req.params.id);
     if (productdata == null) {
@@ -33,15 +34,16 @@ const getOneProduct = async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(400).json({
-      status: false,
-      message: err.message,
-    });
+    // res.status(400).json({
+    //   status: false,
+    //   message: err.message,
+    // });
+    next(err);
   }
 };
 
 // create product
-const createProduct = async (req, res) => {
+const createProduct = async (req, res, next) => {
   try {
     const { name, quantity } = req.body;
     const productdata = await Product.create({ name, quantity });
@@ -55,15 +57,16 @@ const createProduct = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(400).json({
-      status: false,
-      message: error.message,
-    });
+    // res.status(400).json({
+    //   status: false,
+    //   message: error.message,
+    // });
+    next(err);
   }
 };
 
 //update users
-const updateProduct = async (req, res) => {
+const updateProduct = async (req, res, next) => {
   try {
     const { name, quantity } = req.body;
     const id = req.params.id;
@@ -84,15 +87,16 @@ const updateProduct = async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(400).json({
-      status: false,
-      message: err.message,
-    });
+    // res.status(400).json({
+    //   status: false,
+    //   message: err.message,
+    // });
+    next(err);
   }
 };
 
 //delete user
-const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res, next) => {
   try {
     const deleteProduct = await Product.findByIdAndDelete(req.params.id);
     if (deleteProduct == null) {
@@ -104,10 +108,11 @@ const deleteProduct = async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(400).json({
-      status: false,
-      message: err.message,
-    });
+    // res.status(400).json({
+    //   status: false,
+    //   message: err.message,
+    // });
+    next(err);
   }
 };
 
