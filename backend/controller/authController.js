@@ -25,6 +25,7 @@ const login = async (req, res) => {
     });
   }
 };
+
 const signup = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -51,6 +52,7 @@ const signup = async (req, res) => {
     });
   }
 };
+
 const logout = (req, res) => {
   // Clear the 'authToken' cookie
   res.clearCookie("authToken", {

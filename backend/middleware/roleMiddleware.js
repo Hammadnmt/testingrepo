@@ -1,6 +1,6 @@
 const asynchandler = require("express-async-handler");
 
-const checkRole = asynchandler(async (req, res, next) => {
+const roleMiddleware = asynchandler(async (req, res, next) => {
   try {
     let role = req.user.role;
     if (role != "Admin") {
@@ -15,4 +15,4 @@ const checkRole = asynchandler(async (req, res, next) => {
     });
   }
 });
-module.exports = checkRole;
+module.exports = roleMiddleware;

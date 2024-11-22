@@ -27,6 +27,7 @@ jest.mock("../model/productModel.js", () => {
 
 const productModel = require("../model/productModel");
 jest.useFakeTimers();
+
 test("get products", async function () {
   const response = await request(app).get("/product");
   expect(response.statusCode).toBe(201);
