@@ -19,27 +19,23 @@ router
   // .get(errorHandler, validateToken, roleMiddleware, getAllProducts)
   .get(getAllProducts)
   // .post(
-  //   errorHandler,
-  //   validateToken,
   //   roleMiddleware,
   //   productSchema,
   //   createProduct
   // );
-.post(createProduct);
+  .post(createProduct);
 
 router
   .route("/:id")
   // .get(errorHandler, validateToken, roleMiddleware, getOneProduct)
   .get(getOneProduct)
   // .patch(
-  //   errorHandler,
-  //   validateToken,
   //   roleMiddleware,
   //   updatepProductSchema,
   //   updateProduct
   // )
   .patch(updateProduct)
-  // .delete(errorHandler, validateToken, roleMiddleware, deleteProduct);
-.delete(deleteProduct);
+  // .delete(validateToken, roleMiddleware, deleteProduct);
+  .delete(deleteProduct);
 
 module.exports = router;

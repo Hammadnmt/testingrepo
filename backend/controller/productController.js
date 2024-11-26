@@ -13,10 +13,6 @@ const getAllProducts = async (req, res, next) => {
       });
     }
   } catch (error) {
-    // res.status(400).json({
-    //   status: false,
-    //   message: error.message,
-    // });
     next(err);
   }
 };
@@ -34,10 +30,6 @@ const getOneProduct = async (req, res, next) => {
       });
     }
   } catch (err) {
-    // res.status(400).json({
-    //   status: false,
-    //   message: err.message,
-    // });
     next(err);
   }
 };
@@ -57,10 +49,6 @@ const createProduct = async (req, res, next) => {
       });
     }
   } catch (error) {
-    // res.status(400).json({
-    //   status: false,
-    //   message: error.message,
-    // });
     next(err);
   }
 };
@@ -87,10 +75,6 @@ const updateProduct = async (req, res, next) => {
       });
     }
   } catch (err) {
-    // res.status(400).json({
-    //   status: false,
-    //   message: err.message,
-    // });
     next(err);
   }
 };
@@ -108,10 +92,6 @@ const deleteProduct = async (req, res, next) => {
       });
     }
   } catch (err) {
-    // res.status(400).json({
-    //   status: false,
-    //   message: err.message,
-    // });
     next(err);
   }
 };

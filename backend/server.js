@@ -8,6 +8,7 @@ const authrouter = require("./routes/authRoute");
 const morgen = require("morgan");
 const cookieParser = require("cookie-parser");
 const validateJsonBody = require("./middleware/validJson");
+const errorHandler = require("./middleware/errorMiddleware");
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -18,15 +19,15 @@ mongoose
     console.log(err);
   });
 
-
 app.use(express.json());
 app.use(validateJsonBody);
+app.use(errorHandler);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgen("dev"));
 
-app.use("/product", productrouter);
-app.use("/auth", authrouter);
+app.use("/api/product", productrouter);
+app.use("/api/auth", authrouter);
 
 app.listen(PORT, () => {
   console.log(`Server on http://localhost:${PORT}`);

@@ -7,13 +7,14 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     // Check if User Exist
     const userdata = await User.findOne({ email: email });
-    if (userdata && comparePasswords(password, userdata.password)) {
+    if (userdata && (await comparePasswords(password, userdata.password))) {
       const accessToken = genToken(userdata);
       res.cookie("authToken", accessToken, { httpOnly: true });
       res.status(200).json({
         accessToken,
         email: userdata.email,
         role: userdata.role,
+        status: true,
       });
     } else {
       throw new Error("Enter Valid Email and Password");

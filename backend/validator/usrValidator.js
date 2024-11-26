@@ -10,11 +10,10 @@ const userSchema = [
 
   body("email")
     .exists()
-    .withMessage("Email is required")
     .isString()
-    .withMessage("Email must be string")
+    .isEmail()
     .normalizeEmail()
-    .isEmail(),
+    .withMessage("Email must be string"),
 
   body("password")
     .exists()
