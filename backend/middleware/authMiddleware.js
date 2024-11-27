@@ -1,7 +1,7 @@
 const asynchandler = require("express-async-handler");
 const tokenVerify = require("../utils/vrfyToken");
 
-const validateToken = asynchandler(async (req, res, next) => {
+const validateToken = (req, res, next) => {
   try {
     // Retrieve the authentication token from cookies
     let authToken = req.cookies?.authToken; // Corrected the header name
@@ -19,6 +19,6 @@ const validateToken = asynchandler(async (req, res, next) => {
       message: error.message,
     });
   }
-});
+};
 
 module.exports = validateToken;

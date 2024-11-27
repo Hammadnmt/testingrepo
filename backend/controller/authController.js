@@ -2,7 +2,7 @@ const User = require("../model/userModel");
 const genToken = require("../utils/genToken");
 const comparePasswords = require("../utils/hashtoPlain");
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     // Check if User Exist
@@ -11,25 +11,26 @@ const login = async (req, res) => {
       const accessToken = genToken(userdata);
       res.cookie("authToken", accessToken, { httpOnly: true });
       res.status(200).json({
-        accessToken,
+        status: true,
         email: userdata.email,
         role: userdata.role,
-        status: true,
+        accessToken,
       });
     } else {
       throw new Error("Enter Valid Email and Password");
     }
   } catch (error) {
-    res.status(404).json({
-      status: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
+    const userExist = await User.findOne({ email: email });
+    if (userExist) {
+      throw new Error("User already exists");
+    }
     //create new user
     const userdata = await User.create({
       name,
@@ -37,33 +38,25 @@ const signup = async (req, res) => {
       password,
       role,
     });
-    //generates new token
-    const accessToken = genToken(userdata);
-    if (userdata && accessToken) {
-      res.cookie("authToken", accessToken, { httpOnly: true });
-      res.status(201).json({
-        message: "Successfully Signed up",
-        username: userdata.name,
-        accessToken: accessToken,
-      });
+    if (!userdata) {
+      throw new Error("Unable to create user");
     }
-  } catch (error) {
-    res.status(400).json({
-      message: error.message,
+    res.status(201).json({
+      status: true,
+      message: "User created Successfully",
     });
+  } catch (error) {
+    next(error);
   }
 };
 
 const logout = (req, res) => {
   // Clear the 'authToken' cookie
-  res.clearCookie("authToken", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-  });
-
+  res
+    .status(200)
+    .clearCookie("authToken")
+    .json({ message: "Logged out successfully" });
   // Send a response to confirm logout
-  res.status(200).json({ message: "Logged out successfully" });
 };
 
 module.exports = {

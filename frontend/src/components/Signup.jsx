@@ -1,34 +1,67 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { login, reset } from "../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { signup, reset } from "../features/auth/authSlice";
 import Button from "./Button";
-
-const Login = () => {
+const Signup = () => {
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
+    role: "",
   });
 
   const [formErrors, setFormErrors] = useState({
+    nameError: "",
     emailError: "",
     passwordError: "",
+    roleError: "",
   });
-
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const { user, isLoading, isError, isSuccess } = useSelector(
     (state) => state.auth
   );
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const onButtonClick = async () => {
+  useEffect(() => {
+    if (isError) {
+      console.log("error");
+    }
+    if (isSuccess) {
+      navigate("/login");
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        role: "",
+      });
+      setFormErrors({
+        nameError: "",
+        emailError: "",
+        passwordError: "",
+        roleError: "",
+      });
+      setErrorMessage("");
+      dispatch(reset());
+    }
+  }, [user, isError, isSuccess, navigate, dispatch]);
+
+  const onButtonClick = async (e) => {
+    e.preventDefault();
     let isValid = true;
     const newFormErrors = { ...formErrors };
 
     // Validate form fields
+    if (!formData.name) {
+      newFormErrors.nameError = "Enter name";
+      isValid = false;
+    } else {
+      newFormErrors.nameError = "";
+    }
+
     if (!formData.email) {
       newFormErrors.emailError = "Enter Email";
       isValid = false;
@@ -43,25 +76,19 @@ const Login = () => {
       newFormErrors.passwordError = "";
     }
 
+    if (!formData.role) {
+      newFormErrors.roleError = "Enter Role";
+      isValid = false;
+    } else {
+      newFormErrors.roleError = "";
+    }
+
     setFormErrors(newFormErrors);
 
-    // If form is valid, proceed with login
+    // If form is valid, dispatch signup
     if (isValid) {
-      const data = {
-        email: formData.email,
-        password: formData.password,
-      };
       try {
-        dispatch(login(data));
-        if (isSuccess) {
-          navigate("/dashboard");
-          setFormData({
-            email: "",
-            password: "",
-          });
-        } else {
-          throw new Error("...");
-        }
+        dispatch(signup(formData));
       } catch (error) {
         setErrorMessage(error.message);
       }
@@ -79,7 +106,18 @@ const Login = () => {
   return (
     <div className={"mainContainer"}>
       <div className={"titleContainer"}>
-        <div>Login</div>
+        <div>Signup</div>
+      </div>
+      <br />
+      <div className={"inputContainer"}>
+        <input
+          name="name"
+          value={formData.name}
+          placeholder="Enter your name here"
+          onChange={handleChange}
+          className={"inputBox"}
+        />
+        <label className="errorLabel">{formErrors.nameError}</label>
       </div>
       <br />
       <div className={"inputContainer"}>
@@ -106,15 +144,27 @@ const Login = () => {
       </div>
       <br />
       <div className={"inputContainer"}>
+        <input
+          name="role"
+          value={formData.role}
+          placeholder="Enter your role here"
+          onChange={handleChange}
+          className={"inputBox"}
+        />
+        <label className="errorLabel">{formErrors.roleError}</label>
+      </div>
+      <br />
+      <div className={"inputContainer"}>
         <Button
           className={"inputButton"}
           onClick={onButtonClick}
-          desc={"Log in"}
+          desc={"Sign up"}
         />
         <label className="errorLabel">{errorMessage}</label>
       </div>
+      <br />
     </div>
   );
 };
 
-export default Login;
+export default Signup;

@@ -17,6 +17,7 @@ function App() {
   }, []);
   return (
     <>
+    <h3>{message}</h3>
       <Login />
       <Counter />
       <Counter />

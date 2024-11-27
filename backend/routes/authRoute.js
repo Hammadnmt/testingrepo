@@ -6,6 +6,6 @@ const userSchema = require("../validator/usrValidator");
 
 router.route("/login").post(login);
 router.route("/signup").post(userSchema, signup);
-router.route("/logout").get(logout);
+router.route("/logout").post(logout);
 
 module.exports = router;
