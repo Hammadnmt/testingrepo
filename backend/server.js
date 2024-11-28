@@ -21,13 +21,13 @@ mongoose
 
 app.use(express.json());
 app.use(validateJsonBody);
-app.use(errorHandler);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgen("dev"));
 
 app.use("/api/product", productrouter);
 app.use("/api/auth", authrouter);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server on http://localhost:${PORT}`);

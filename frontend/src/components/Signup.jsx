@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signup, reset } from "../features/auth/authSlice";
 import Button from "./Button";
+import Loader from "./Loading";
+import "../App.css";
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -18,43 +20,25 @@ const Signup = () => {
     passwordError: "",
     roleError: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const { user, isLoading, isError, isSuccess } = useSelector(
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isError) {
-      console.log("error");
-    }
     if (isSuccess) {
       navigate("/login");
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        role: "",
-      });
-      setFormErrors({
-        nameError: "",
-        emailError: "",
-        passwordError: "",
-        roleError: "",
-      });
-      setErrorMessage("");
       dispatch(reset());
     }
-  }, [user, isError, isSuccess, navigate, dispatch]);
+  }, [user, isError, isLoading, isSuccess, navigate, dispatch]);
 
-  const onButtonClick = async (e) => {
-    e.preventDefault();
+  // Simplified and reusable validation function
+  const validateForm = () => {
     let isValid = true;
     const newFormErrors = { ...formErrors };
 
-    // Validate form fields
     if (!formData.name) {
       newFormErrors.nameError = "Enter name";
       isValid = false;
@@ -65,12 +49,18 @@ const Signup = () => {
     if (!formData.email) {
       newFormErrors.emailError = "Enter Email";
       isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newFormErrors.emailError = "Enter a valid email";
+      isValid = false;
     } else {
       newFormErrors.emailError = "";
     }
 
     if (!formData.password) {
       newFormErrors.passwordError = "Enter Password";
+      isValid = false;
+    } else if (formData.password.length < 6) {
+      newFormErrors.passwordError = "Password should be at least 6 characters";
       isValid = false;
     } else {
       newFormErrors.passwordError = "";
@@ -84,14 +74,15 @@ const Signup = () => {
     }
 
     setFormErrors(newFormErrors);
+    return isValid;
+  };
 
-    // If form is valid, dispatch signup
-    if (isValid) {
-      try {
-        dispatch(signup(formData));
-      } catch (error) {
-        setErrorMessage(error.message);
-      }
+  const onButtonClick = async (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      // Dispatch signup action
+      dispatch(signup(formData));
     }
   };
 
@@ -103,7 +94,9 @@ const Signup = () => {
     }));
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className={"mainContainer"}>
       <div className={"titleContainer"}>
         <div>Signup</div>
@@ -155,12 +148,9 @@ const Signup = () => {
       </div>
       <br />
       <div className={"inputContainer"}>
-        <Button
-          className={"inputButton"}
-          onClick={onButtonClick}
-          desc={"Sign up"}
-        />
-        <label className="errorLabel">{errorMessage}</label>
+        <Button onClick={onButtonClick} desc={"Sign up"} />
+        <label className="errorLabel">{message}</label>{" "}
+        {/* Error message from Redux */}
       </div>
       <br />
     </div>

@@ -4,12 +4,13 @@ import authServices from "./authServices";
 
 // Initial state
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || null, // Get user from localStorage
+  user: localStorage.getItem("user") || null, // Get user from localStorage
   isLoading: false,
   isError: false,
   isSuccess: false,
   message: "",
 };
+
 // Async thunk for signup
 export const signup = createAsyncThunk(
   "auth/signup",
@@ -17,15 +18,12 @@ export const signup = createAsyncThunk(
     try {
       return await authServices.register(user); // Call to auth service for registration
     } catch (error) {
-      return thunkApi.rejectWithValue(
-        error.response?.data?.message || error.message
-      );
+      // Rejecting with a message if the error occurs
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
-export const logout = createAsyncThunk("auth/logout", async () => {
-  await authServices.logout();
-});
+
 // Async thunk for login
 export const login = createAsyncThunk(
   "auth/login", // Fixed action type
@@ -33,12 +31,15 @@ export const login = createAsyncThunk(
     try {
       return await authServices.signin(user); // Call to auth service for login
     } catch (error) {
-      return thunkApi.rejectWithValue(
-        error.response?.data?.message || error.message
-      );
+      return thunkApi.rejectWithValue(error.message); // Rejecting with error message
     }
   }
 );
+
+export const logout = createAsyncThunk("auth/logout", async () => {
+  await authServices.logout(); // Call logout service
+
+});
 
 // Slice definition
 export const authSlice = createSlice({
@@ -73,7 +74,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload;
+        state.message = action.payload; // Set error message
       })
       // Handle login
       .addCase(login.pending, (state) => {
@@ -82,8 +83,10 @@ export const authSlice = createSlice({
         state.isSuccess = false;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.user = action.payload;
+        console.log(action.payload);
+        localStorage.setItem("user", JSON.stringify(action.payload));
         state.isLoading = false;
+        state.user = action.payload;
         state.isError = false;
         state.isSuccess = true;
       })
@@ -92,7 +95,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload;
+        state.message = action.payload; // Set error message for login
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;

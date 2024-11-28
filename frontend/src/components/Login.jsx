@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "./Button";
+import Loader from "./Loading";
+import "../App.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -16,55 +18,74 @@ const Login = () => {
     passwordError: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess } = useSelector(
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
-  const onButtonClick = async () => {
+  useEffect(() => {
+    if (isSuccess || user) {
+      // Clear form data and navigate to dashboard
+      setFormData({
+        email: "",
+        password: "",
+      });
+      navigate("/dashboard");
+      // dispatch(reset());
+    }
+    if (isError) {
+      // If there's an error, show the error message
+      setFormErrors({ ...formErrors, passwordError: message });
+      dispatch(reset()); // Reset the state after showing error
+    }
+  }, [
+    user,
+    isError,
+    isLoading,
+    isSuccess,
+    dispatch,
+    navigate,
+    formErrors,
+    setFormErrors,
+    message,
+  ]);
+
+  const onButtonClick = async (e) => {
+    e.preventDefault();
     let isValid = true;
     const newFormErrors = { ...formErrors };
 
     // Validate form fields
-    if (!formData.email) {
-      newFormErrors.emailError = "Enter Email";
-      isValid = false;
-    } else {
-      newFormErrors.emailError = "";
-    }
+    const validate = () => {
+      if (!formData.email) {
+        newFormErrors.emailError = "Enter Email";
+        isValid = false;
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newFormErrors.emailError = "Enter a valid email";
+        isValid = false;
+      } else {
+        newFormErrors.emailError = "";
+      }
 
-    if (!formData.password) {
-      newFormErrors.passwordError = "Enter Password";
-      isValid = false;
-    } else {
-      newFormErrors.passwordError = "";
-    }
-
-    setFormErrors(newFormErrors);
+      if (!formData.password) {
+        newFormErrors.passwordError = "Enter Password";
+        isValid = false;
+      } else {
+        newFormErrors.passwordError = "";
+      }
+      setFormErrors(newFormErrors);
+      return isValid;
+    };
 
     // If form is valid, proceed with login
-    if (isValid) {
+    if (validate()) {
       const data = {
         email: formData.email,
         password: formData.password,
       };
-      try {
-        dispatch(login(data));
-        if (isSuccess) {
-          navigate("/dashboard");
-          setFormData({
-            email: "",
-            password: "",
-          });
-        } else {
-          throw new Error("...");
-        }
-      } catch (error) {
-        setErrorMessage(error.message);
-      }
+      dispatch(login(data));
     }
   };
 
@@ -76,7 +97,9 @@ const Login = () => {
     }));
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className={"mainContainer"}>
       <div className={"titleContainer"}>
         <div>Login</div>
@@ -102,16 +125,12 @@ const Login = () => {
           onChange={handleChange}
           className={"inputBox"}
         />
-        <label className="errorLabel">{formErrors.passwordError}</label>
       </div>
       <br />
       <div className={"inputContainer"}>
-        <Button
-          className={"inputButton"}
-          onClick={onButtonClick}
-          desc={"Log in"}
-        />
-        <label className="errorLabel">{errorMessage}</label>
+        {formErrors.passwordError || message}
+        <Button onClick={onButtonClick} desc="Log in" />
+        <label className="errorLabel"></label>
       </div>
     </div>
   );
