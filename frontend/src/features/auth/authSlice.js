@@ -38,7 +38,6 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   await authServices.logout(); // Call logout service
-
 });
 
 // Slice definition
@@ -83,7 +82,6 @@ export const authSlice = createSlice({
         state.isSuccess = false;
       })
       .addCase(login.fulfilled, (state, action) => {
-        console.log(action.payload);
         localStorage.setItem("user", JSON.stringify(action.payload));
         state.isLoading = false;
         state.user = action.payload;

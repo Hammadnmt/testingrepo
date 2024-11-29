@@ -4,10 +4,9 @@ import axios from "axios";
 const basePath = "/api/product";
 
 // Sign in function
-async function getProducts(userData) {
+async function getProducts() {
   try {
-    const response = await axios.get(basePath + "/");
-    return response.data; // Return response data for the successful login
+    return await axios.get(basePath + "/"); // Return response data for the successful login
   } catch (error) {
     // Throwing a descriptive error to be handled by the Redux action
     throw new Error(
@@ -18,8 +17,39 @@ async function getProducts(userData) {
 // Register function
 async function getProductById(product_id) {
   try {
-    const response = await axios.get(basePath + "/:id", product_id);
-    return response.data; // Return response data after successful registration
+    return await axios.get(`${basePath}/${product_id}`); // Return response data after successful registration
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || error.message || "operation failed!"
+    );
+  }
+}
+async function createNewProduct(productData) {
+  try {
+    return await axios.post(basePath + "/", productData);
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || error.message || "Registration failed!"
+    );
+  }
+}
+async function deleteProductByid(product_id) {
+  try {
+    return await axios.delete(`${basePath}/${product_id}`); // Return response data after successful registration
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || error.message || "operation failed!"
+    );
+  }
+}
+async function updateProductByid(data) {
+  try {
+    return await axios.patch(`${basePath}/${data.id}`, {
+      body: {
+        name: data.name,
+        quantity: data.quantity,
+      },
+    }); // Return response data after successful registration
   } catch (error) {
     throw new Error(
       error.response?.data?.message || error.message || "operation failed!"
@@ -28,6 +58,9 @@ async function getProductById(product_id) {
 }
 
 const authServices = {
+  updateProductByid,
+  createNewProduct,
+  deleteProductByid,
   getProducts,
   getProductById,
 };

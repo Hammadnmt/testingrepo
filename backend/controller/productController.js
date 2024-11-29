@@ -26,7 +26,7 @@ const getOneProduct = async (req, res, next) => {
     } else {
       res.status(200).json({
         status: true,
-        data: productdata,
+        data: [productdata],
       });
     }
   } catch (err) {
@@ -71,7 +71,6 @@ const updateProduct = async (req, res, next) => {
       res.status(200).json({
         status: true,
         message: "Product Updated Successfully",
-        data: productdata,
       });
     }
   } catch (err) {

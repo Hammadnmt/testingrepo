@@ -5,6 +5,8 @@ import { login, reset } from "../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "./Button";
 import Loader from "./Loading";
+import { store } from "../store/store";
+import { loggingAndDispatch } from "../middleware/logging";
 import "../App.css";
 
 const Login = () => {
@@ -38,7 +40,7 @@ const Login = () => {
     if (isError) {
       // If there's an error, show the error message
       setFormErrors({ ...formErrors, passwordError: message });
-      dispatch(reset()); // Reset the state after showing error
+      loggingAndDispatch(store, reset()); // Reset the state after showing error
     }
   }, [
     user,

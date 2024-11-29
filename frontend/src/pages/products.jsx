@@ -1,40 +1,39 @@
 /* eslint-disable no-unused-vars */
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { getAllproducts, reset } from "../features/auth/authSlice";
+import {
+  getAllproducts,
+  getProduct,
+  reset,
+} from "../features/product/productSlice";
 import Button from "../components/Button";
 import Loader from "../components/Loading";
+import Product from "../components/Products/Product";
 import "../App.css";
 
 function Products() {
-  const [items, setItems] = useState([]);
   const dispatch = useDispatch();
-
   const { products, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.product
   );
-  useEffect(() => {
-    if (isLoading) {
-      <Loader />;
-    }
-    if (isSuccess || products) {
-      setItems(products);
-      dispatch(reset());
-    }
-  }, [products, isLoading, isError, isSuccess, message, dispatch]);
-
   const onButtonClick = async (e) => {
     e.preventDefault();
     dispatch(getAllproducts());
   };
-  return (
+
+  if (isError) {
+    return <div>Error: {message}</div>;
+  }
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className="products">
       <h1>Products</h1>
-      <Button onClick={onButtonClick}>Fetch Products</Button>
-      {items.map((item) => (
-        <div key={item.id}>
-          <h2>{item.name}</h2>
-          <p>{item.description}</p>
+      {/* {console.log(pro';ducts)} */}
+      <Button onClick={onButtonClick} desc={"Fetch Button"} />
+      {products?.data?.data.map((product) => (
+        <div key={product._id}>
+          <Product name={product.name} quantity={product.quantity} />
         </div>
       ))}
     </div>
