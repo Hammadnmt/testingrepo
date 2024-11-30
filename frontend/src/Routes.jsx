@@ -17,10 +17,10 @@ const AppRoutes = () => {
       <Route path="/" element={<App />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/product/update" element={<UpdateProduct />} />
       <Route path="" element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/product" element={<Products />} />
+        <Route path="/product/update" element={<UpdateProduct />} />
         <Route path="/product/create" element={<CreateProduct />} />
         <Route path="/product/delete" element={<DeleteProduct />} />
       </Route>

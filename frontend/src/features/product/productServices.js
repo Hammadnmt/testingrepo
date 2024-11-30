@@ -45,10 +45,8 @@ async function deleteProductByid(product_id) {
 async function updateProductByid(data) {
   try {
     return await axios.patch(`${basePath}/${data.id}`, {
-      body: {
-        name: data.name,
-        quantity: data.quantity,
-      },
+      name: data.name,
+      quantity: data.quantity,
     }); // Return response data after successful registration
   } catch (error) {
     throw new Error(

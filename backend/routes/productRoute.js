@@ -16,26 +16,28 @@ const updatepProductSchema = require("../validator/updateValidator");
 
 router
   .route("/")
-  // .get(errorHandler, validateToken, roleMiddleware, getAllProducts)
-  .get(getAllProducts)
-  // .post(
-  //   roleMiddleware,
-  //   productSchema,
-  //   createProduct
-  // );
-  .post(createProduct);
+  .get(errorHandler, validateToken, roleMiddleware, getAllProducts)
+  // .get(getAllProducts)
+  .post(
+    validateToken,
+    roleMiddleware,
+    productSchema,
+    createProduct
+  );
+// .post(createProduct);
 
 router
   .route("/:id")
-  // .get(errorHandler, validateToken, roleMiddleware, getOneProduct)
-  .get(getOneProduct)
-  // .patch(
-  //   roleMiddleware,
-  //   updatepProductSchema,
-  //   updateProduct
-  // )
-  .patch(updateProduct)
-  // .delete(validateToken, roleMiddleware, deleteProduct);
-  .delete(deleteProduct);
+  .get(errorHandler, validateToken, roleMiddleware, getOneProduct)
+  // .get(getOneProduct)
+  .patch(
+    validateToken,
+    roleMiddleware,
+    updatepProductSchema,
+    updateProduct
+  )
+  // .patch(updateProduct)
+  .delete(validateToken, roleMiddleware, deleteProduct);
+// .delete(deleteProduct);
 
 module.exports = router;

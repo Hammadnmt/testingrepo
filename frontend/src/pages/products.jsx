@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useSelector, useDispatch } from "react-redux";
+import TableData from "../components/Table";
+
 import { useState, useEffect } from "react";
 import {
   getAllproducts,
@@ -8,7 +10,6 @@ import {
 } from "../features/product/productSlice";
 import Button from "../components/Button";
 import Loader from "../components/Loading";
-import Product from "../components/Products/Product";
 import "../App.css";
 
 function Products() {
@@ -31,11 +32,7 @@ function Products() {
       <h1>Products</h1>
       {/* {console.log(pro';ducts)} */}
       <Button onClick={onButtonClick} desc={"Fetch Button"} />
-      {products?.data?.data.map((product) => (
-        <div key={product._id}>
-          <Product name={product.name} quantity={product.quantity} />
-        </div>
-      ))}
+      <TableData products={products} />
     </div>
   );
 }

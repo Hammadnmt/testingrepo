@@ -28,7 +28,7 @@ const DeleteProduct = () => {
   };
   useEffect(() => {
     if (isSuccess) {
-      navigate("/products");
+      navigate("/product");
       dispatch(reset());
     }
   }, [isSuccess, navigate, dispatch]);
@@ -37,10 +37,6 @@ const DeleteProduct = () => {
 
     if (validateForm()) {
       dispatch(deleteProduct(id));
-      if (isSuccess) {
-        navigate("/products");
-        dispatch(reset());
-      }
     }
   };
 
