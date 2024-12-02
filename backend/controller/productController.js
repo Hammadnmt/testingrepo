@@ -56,16 +56,17 @@ const createProduct = async (req, res, next) => {
 //update users
 const updateProduct = async (req, res, next) => {
   try {
-    const { name, quantity } = req.body;
+    // const { name, quantity } = req.body;
     const id = req.params.id;
-    console.log(name, quantity);
-    const productdata = await Product.findByIdAndUpdate(
-      id,
-      { name, quantity },
-      {
-        new: true,
-      }
-    );
+    // console.log(name, quantity);
+    if (req.body.quantity == -1) {
+      delete req.body.quantity;
+    } else if (req.body.name == "") {
+      delete req.body.name;
+    }
+    const productdata = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (productdata == null) {
       throw new Error("No Product Found");
     } else {

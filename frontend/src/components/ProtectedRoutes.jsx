@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 
 const ProtectedRoute = () => {
   const { user } = useSelector((state) => state.auth);
-  for (const key in user) {
-    console.log(user[key]);
-  }
+
   return user ? (
     user.role == "Admin" ? (
       <Outlet />

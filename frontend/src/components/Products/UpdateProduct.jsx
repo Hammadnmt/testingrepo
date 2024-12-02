@@ -10,7 +10,7 @@ const UpdateProduct = () => {
   const [formData, setFormData] = useState({
     id: "",
     name: "",
-    quantity: "",
+    quantity: -1,
   });
 
   const [idErrors, setIDError] = useState("");
@@ -88,6 +88,7 @@ const UpdateProduct = () => {
           name="quantity"
           value={formData.quantity}
           placeholder="Enter quantity here"
+          type="number"
           onChange={handleChange}
           className={"inputBox"}
         />

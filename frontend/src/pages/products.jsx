@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useSelector, useDispatch } from "react-redux";
 import TableData from "../components/Table";
-
 import { useState, useEffect } from "react";
 import {
   getAllproducts,
@@ -10,6 +9,7 @@ import {
 } from "../features/product/productSlice";
 import Button from "../components/Button";
 import Loader from "../components/Loading";
+
 import "../App.css";
 
 function Products() {
