@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { signup, reset } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { useRegisterUserMutation, reset } from "../features/auth/authSlice";
+import { loggingAndDispatch } from "../middleware/logging";
+import { store } from "../store/store";
 import Button from "./Button";
 import Loader from "./Loading";
 import "../App.css";
@@ -21,18 +23,26 @@ const Signup = () => {
     roleError: "",
   });
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [registerUser, { isLoading, isSuccess, data, error }] =
+    useRegisterUserMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("/login");
-      dispatch(reset());
+      // Clear form data and navigate to dashboard
+      setFormData({
+        email: "",
+        password: "",
+      });
     }
-  }, [user, isError, isLoading, isSuccess, navigate, dispatch]);
+    if (isLoading) {
+      <Loader />;
+    }
+    if (error) {
+      loggingAndDispatch(store, reset()); // Reset the state after showing error
+    }
+  }, [isLoading, error, isSuccess, navigate, dispatch]);
 
   // Simplified and reusable validation function
   const validateForm = () => {
@@ -82,7 +92,12 @@ const Signup = () => {
 
     if (validateForm()) {
       // Dispatch signup action
-      dispatch(signup(formData));
+      try {
+        await registerUser(formData).unwrap();
+        navigate("/login");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -149,8 +164,6 @@ const Signup = () => {
       <br />
       <div className={"inputContainer"}>
         <Button onClick={onButtonClick} desc={"Sign up"} />
-        <label className="errorLabel">{message}</label>{" "}
-        {/* Error message from Redux */}
       </div>
       <br />
     </div>

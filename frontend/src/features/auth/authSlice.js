@@ -5,7 +5,7 @@ import { baseApi } from "../baseApi";
 
 // Initial state
 const initialState = {
-  user: localStorage.getItem("user") || null, // Get user from localStorage
+  user: localStorage.getItem("user") || null,
   isLoading: false,
   isError: false,
   isSuccess: false,
@@ -28,7 +28,12 @@ const authApi = baseApi.injectEndpoints({
         method: "POST", // POST method for sending data
         body: credentials, // Send user credentials
       }),
-      transformResponse: (response, meta, arg) => response.data,
+      transformResponse: (response, meta, arg) => {
+        // console.log("Raw response from API:", response);
+        // Store user data in localStorage
+        localStorage.setItem("user", JSON.stringify(response));
+        return response;
+      },
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
     registerUser: builder.mutation({
@@ -92,8 +97,9 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.message = "";
     },
-    setUser: (state, action) => {
-      state.user = action.payload;
+    setUser: (state, data) => {
+      state.user = data.payload;
+      // console.log(state.user);
     },
   },
 });
@@ -146,4 +152,8 @@ export const authSlice = createSlice({
 
 export const { reset, setUser } = authSlice.actions;
 export default authSlice.reducer;
-export const { useLoginMutation, useSignUpMutation } = authApi;
+export const {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+  useLogoutUserMutation,
+} = authApi;

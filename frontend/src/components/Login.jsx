@@ -1,7 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { login, reset } from "../features/auth/authSlice";
+import {
+  useLoginUserMutation,
+  setUser,
+  reset,
+} from "../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "./Button";
 import Loader from "./Loading";
@@ -19,39 +23,39 @@ const Login = () => {
     emailError: "",
     passwordError: "",
   });
-
+  const [loginUser, { isLoading, isSuccess, data, error }] =
+    useLoginUserMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
-
+  const { user } = useSelector((state) => state.auth);
+  // console.log(user);
   useEffect(() => {
-    if (isSuccess || user) {
+    if (user) {
       // Clear form data and navigate to dashboard
       setFormData({
         email: "",
         password: "",
       });
-      navigate("/dashboard");
       // dispatch(reset());
     }
-    if (isError) {
+    if (isLoading) {
+      <Loader />;
+    }
+    if (error) {
       // If there's an error, show the error message
-      setFormErrors({ ...formErrors, passwordError: message });
+      // setFormErrors({ ...formErrors, });
       loggingAndDispatch(store, reset()); // Reset the state after showing error
     }
   }, [
     user,
-    isError,
+    error,
     isLoading,
     isSuccess,
     dispatch,
     navigate,
     formErrors,
     setFormErrors,
-    message,
   ]);
 
   const onButtonClick = async (e) => {
@@ -87,7 +91,14 @@ const Login = () => {
         email: formData.email,
         password: formData.password,
       };
-      dispatch(login(data));
+      try {
+        const response = await loginUser(formData).unwrap();
+        dispatch(setUser(response));
+        console.log(user);
+        navigate("/dashboard");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -130,7 +141,7 @@ const Login = () => {
       </div>
       <br />
       <div className={"inputContainer"}>
-        {formErrors.passwordError || message}
+        {/* {formErrors.passwordError || message} */}
         <Button onClick={onButtonClick} desc="Log in" />
         <label className="errorLabel"></label>
       </div>
