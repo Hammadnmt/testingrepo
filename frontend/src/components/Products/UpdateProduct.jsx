@@ -31,11 +31,14 @@ const UpdateProduct = () => {
     return isValid;
   };
   useEffect(() => {
+    if (isLoading) {
+      <Loader />;
+    }
     if (isSuccess) {
       navigate("/product");
       dispatch(reset());
     }
-  }, [isSuccess, navigate, dispatch]);
+  }, [isSuccess, isLoading, navigate, dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -58,6 +58,7 @@ const updateProduct = async (req, res, next) => {
   try {
     const { name, quantity } = req.body;
     const id = req.params.id;
+    console.log(name, quantity);
     const productdata = await Product.findByIdAndUpdate(
       id,
       { name, quantity },

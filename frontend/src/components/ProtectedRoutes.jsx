@@ -3,9 +3,18 @@ import { useSelector } from "react-redux";
 
 const ProtectedRoute = () => {
   const { user } = useSelector((state) => state.auth);
-  const { products } = useSelector((state) => state.product);
-  console.log(products)
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  for (const key in user) {
+    console.log(user[key]);
+  }
+  return user ? (
+    user.role == "Admin" ? (
+      <Outlet />
+    ) : (
+      <Navigate to="/" />
+    )
+  ) : (
+    <Navigate to="/login" />
+  );
 };
 
 export default ProtectedRoute;

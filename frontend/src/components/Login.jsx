@@ -34,6 +34,7 @@ const Login = () => {
         email: "",
         password: "",
       });
+      // user.role == "Admin" ? navigate("/dashboard") : navigate("/");
       navigate("/dashboard");
       // dispatch(reset());
     }
