@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signup, reset } from "../features/auth/authSlice";
 import Button from "./Button";
@@ -144,13 +144,15 @@ const Signup = () => {
           onChange={handleChange}
           className={"inputBox"}
         />
+        <label className="errorLabel">Already a User?
+          <Link to={"/login"}>Login</Link>
+        </label>
         <label className="errorLabel">{formErrors.roleError}</label>
       </div>
       <br />
       <div className={"inputContainer"}>
         <Button onClick={onButtonClick} desc={"Sign up"} />
         <label className="errorLabel">{message}</label>{" "}
-        {/* Error message from Redux */}
       </div>
       <br />
     </div>

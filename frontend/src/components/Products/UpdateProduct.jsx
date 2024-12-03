@@ -1,44 +1,26 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateProduct, reset } from "../../features/product/productSlice";
 import Button from "../Button";
 import Loader from "../Loading";
 import "../../App.css";
 const UpdateProduct = () => {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
-    id: "",
+    id: id,
     name: "",
     quantity: -1,
   });
 
-  const [idErrors, setIDError] = useState("");
+  // const [idErrors, setIDError] = useState("");
 
   const { isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.product
   );
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // Simplified and reusable validation function
-  const validateForm = () => {
-    let isValid = true;
-    if (!formData.id) {
-      setIDError("Enter id");
-      isValid = false;
-    }
-    return isValid;
-  };
-  useEffect(() => {
-    if (isLoading) {
-      <Loader />;
-    }
-    if (isSuccess) {
-      navigate("/product");
-      dispatch(reset());
-    }
-  }, [isSuccess, isLoading, navigate, dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,14 +31,13 @@ const UpdateProduct = () => {
   };
   const onButtonClick = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      dispatch(updateProduct(formData));
-    }
+    dispatch(updateProduct(formData));
   };
+  if (isSuccess) {
+    navigate(`/product`);
+  }
 
-  return isLoading ? (
-    <Loader />
-  ) : (
+  return (
     <div className={"mainContainer"}>
       <div className={"titleContainer"}>
         <div>Update product</div>
@@ -70,7 +51,7 @@ const UpdateProduct = () => {
           onChange={handleChange}
           className={"inputBox"}
         />
-        <label className="errorLabel">{idErrors}</label>
+        {/* <label className="errorLabel">{idErrors}</label> */}
       </div>
       <br />
       <div className={"inputContainer"}>
@@ -94,7 +75,7 @@ const UpdateProduct = () => {
         />
       </div>
       <div className={"inputContainer"}>
-        <Button onClick={onButtonClick} desc={"Create"} />
+        <Button onClick={onButtonClick} desc={"Update"} />
         {isError && <div className="errorLabel">{message}</div>}
       </div>
       <br />

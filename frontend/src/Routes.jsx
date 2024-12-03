@@ -13,17 +13,16 @@ import ProtectedRoute from "./components/ProtectedRoutes";
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* Public Routes */}9 9
-      <Route path="/" element={<App />} />
+      {/* Public Routes */}9 9{/* <Route path="/" element={<App />} /> */}
+      <Route path="/" element={<Signup />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
       <Route path="" element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/product" element={<Products />} />
-        <Route path="/product/update" element={<UpdateProduct />} />
         <Route path="/product/create" element={<CreateProduct />} />
         <Route path="/product/delete" element={<DeleteProduct />} />
       </Route>
+      <Route path="/product/update/:id" element={<UpdateProduct />} />
     </Routes>
   );
 };

@@ -9,9 +9,7 @@ async function getProducts() {
     return await axios.get(basePath + "/"); // Return response data for the successful login
   } catch (error) {
     // Throwing a descriptive error to be handled by the Redux action
-    throw new Error(
-      error.response?.data?.message || error.message || "Operation failed!"
-    );
+    throw new Error(error.message || "Operation failed!");
   }
 }
 // Register function

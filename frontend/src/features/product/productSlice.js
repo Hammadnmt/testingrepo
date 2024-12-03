@@ -25,8 +25,8 @@ export const getAllproducts = createAsyncThunk(
   "product/getAll",
   async (thunkApi) => {
     try {
-      return await productServices.getProducts(); // Call to auth service for registration
-      // return await response.json();
+      const response = await productServices.getProducts(); // Call to auth service for registration
+      return response.data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
@@ -125,7 +125,7 @@ export const productSlice = createSlice({
       })
       .addCase(createProduct.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.products = action.payload;
+        state.products.push(action.payload);
         state.isError = false;
         state.isSuccess = true;
       })
@@ -164,6 +164,9 @@ export const productSlice = createSlice({
         state.message = action.payload;
         state.isError = false;
         state.isSuccess = true;
+        state.products = state.products.filter(
+          (product) => product._id !== action.payload.id
+        );
       })
       .addCase(deleteProduct.rejected, (state, action) => {
         state.products = [];
