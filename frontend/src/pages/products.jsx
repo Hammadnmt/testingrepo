@@ -4,8 +4,8 @@ import TableData from "../components/Table";
 
 import { useState, useEffect } from "react";
 import {
-  getAllproducts,
-  getProduct,
+  useGetAllProductsQuery,
+  setProducts,
   reset,
 } from "../features/product/productSlice";
 import Button from "../components/Button";
@@ -14,16 +14,22 @@ import "../App.css";
 
 function Products() {
   const dispatch = useDispatch();
-  const { products, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.product
-  );
+  const { products } = useSelector((state) => state.product);
+  const [getAllProducts, { isLoading, isSuccess, error }] = useGetAllProductsQuery();
+
   const onButtonClick = async (e) => {
     e.preventDefault();
-    dispatch(getAllproducts());
+    try {
+      const response = await getAllProducts();
+      dispatch(setProducts(response.data));
+      return response.data;
+    } catch (error) {
+      console.log(error)
+    }
   };
 
-  if (isError) {
-    return <div>Error: {message}</div>;
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
   return isLoading ? (
     <Loader />

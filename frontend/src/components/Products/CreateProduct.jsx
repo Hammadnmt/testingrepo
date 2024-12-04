@@ -2,11 +2,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { createProduct, reset } from "../../features/product/productSlice";
+import { useCreateProductMutation, setProducts, reset } from "../../features/product/productSlice";
 import Button from "../Button";
 import Loader from "../Loading";
 import "../../App.css";
 const CreateProduct = () => {
+  const [createProduct, { isLoading, isSuccess, data, error }] = useCreateProductMutation();
+
   const [formData, setFormData] = useState({
     name: "",
     quantity: "",
@@ -16,10 +18,6 @@ const CreateProduct = () => {
     nameError: "",
     quantityError: "",
   });
-
-  const { products, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.product
-  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -61,7 +59,11 @@ const CreateProduct = () => {
 
     if (validateForm()) {
       // Dispatch signup action
-      dispatch(createProduct(formData));
+      try {
+        await CreateProduct(FormData);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
