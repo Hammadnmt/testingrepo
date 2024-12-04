@@ -18,7 +18,6 @@ const Dashboard = () => {
   }
   return (
     <>
-      <div>Dashboard</div>
       <LeftPanel />
       <Button onClick={logoutButton} desc={"Logout"} />
     </>

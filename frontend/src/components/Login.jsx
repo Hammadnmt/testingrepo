@@ -103,39 +103,43 @@ const Login = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <div className={"mainContainer"}>
-      <div className={"titleContainer"}>
-        <div>Login</div>
+    <>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+        <div
+          id="form-container"
+          className="justify-center items-center bg-white p-16 rounded-lg shadow-2xl w-80 z-10 transform transition duration-500 ease-in-out"
+        >
+          <h2
+            id="form-title"
+            className="text-center text-3xl font-bold mb-10 text-gray-800"
+          >
+            Login
+          </h2>
+          <form className="space-y-5 ">
+            <input
+              name="email"
+              value={formData.email}
+              placeholder="Enter your email here"
+              onChange={handleChange}
+              className={"w-full h-12 border border-gray-800 px-3 rounded-lg"}
+            />
+            <input
+              name="password"
+              type="password"
+              value={formData.password}
+              placeholder="Enter your password here"
+              onChange={handleChange}
+              className={"w-full h-12 border border-gray-800 px-3 rounded-lg"}
+            />
+            <div className={"inputContainer"}>
+              {formErrors.passwordError || message}
+              <Button onClick={onButtonClick} desc="Log in" />
+              <label className="errorLabel"></label>
+            </div>
+          </form>
+        </div>
       </div>
-      <br />
-      <div className={"inputContainer"}>
-        <input
-          name="email"
-          value={formData.email}
-          placeholder="Enter your email here"
-          onChange={handleChange}
-          className={"inputBox"}
-        />
-        <label className="errorLabel">{formErrors.emailError}</label>
-      </div>
-      <br />
-      <div className={"inputContainer"}>
-        <input
-          name="password"
-          type="password"
-          value={formData.password}
-          placeholder="Enter your password here"
-          onChange={handleChange}
-          className={"inputBox"}
-        />
-      </div>
-      <br />
-      <div className={"inputContainer"}>
-        {formErrors.passwordError || message}
-        <Button onClick={onButtonClick} desc="Log in" />
-        <label className="errorLabel"></label>
-      </div>
-    </div>
+    </>
   );
 };
 

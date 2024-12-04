@@ -10,15 +10,6 @@ import Button from "../components/Button";
 import Loader from "../components/Loading";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-
 export default function TableData() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,7 +18,6 @@ export default function TableData() {
     (state) => state.product
   );
   useEffect(() => {
-    
     if (isLoading) {
       return <Loader />;
     }
@@ -40,26 +30,31 @@ export default function TableData() {
       desc={"Add Product"}
     />
   ) : (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Product Name</TableCell>
-            <TableCell align="centre">Quantity</TableCell>
-            <TableCell align="center">Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {products.map((product) => (
-            <TableRow
-              key={product._id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {product.name}
-              </TableCell>
-              <TableCell align="center">{product.quantity}</TableCell>
-              <TableCell align="center">
+    <table className="table-auto w-full border-separate border-spacing-4">
+      <thead className="bg-indigo-600 text-white">
+        <tr>
+          <th className="px-6 py-3 text-left">ID</th>
+          <th className="px-6 py-3 text-left">Name</th>
+          <th className="px-6 py-3 text-left">Quantity</th>
+          <th className="px-6 py-3 text-left">Action</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {products.map((product) => (
+          <tr key={product._id} className="hover:bg-gray-100">
+            <td className="px-6 py-4">{product._id}</td>
+            <td className="px-6 py-4">{product.name}</td>
+            <td className="px-6 py-4">{product.quantity}</td>
+            <td className="px-6 py-4">
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => {
+                    navigate(`/product/update/${product._id}`);
+                  }}
+                >
+                  <EditIcon style={{ fontSize: 20 }} />
+                </button>
                 <button
                   onClick={() => {
                     dispatch(deleteProduct(product._id));
@@ -68,19 +63,11 @@ export default function TableData() {
                 >
                   <DeleteIcon style={{ fontSize: 20 }} />
                 </button>
-
-                <button
-                  onClick={() => {
-                    navigate(`/product/update/${product._id}`);
-                  }}
-                >
-                  <EditIcon style={{ fontSize: 20 }} />
-                </button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }

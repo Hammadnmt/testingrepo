@@ -1,34 +1,38 @@
-import { Sidebar } from "flowbite-react";
-import { NavLink } from "react-router-dom";
-import {
-  HiChartPie,
-  HiInbox,
-  HiShoppingBag,
-  HiUser,
-  HiViewBoards,
-} from "react-icons/hi";
-
-export function LeftPanel() {
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+// import Logout from "../pages/logout";
+function Sidebar() {
   return (
-    <Sidebar aria-label="Default sidebar example">
-      <Sidebar.Items>
-        <Sidebar.ItemGroup>
-          <Sidebar.Item icon={HiChartPie}>Dashboard</Sidebar.Item>
-          <Sidebar.Item icon={HiViewBoards}>
-            <NavLink to="/product">Products</NavLink>
-          </Sidebar.Item>
-          <Sidebar.Item icon={HiInbox}>
-            <NavLink to="/product/create">Create Product</NavLink>
-          </Sidebar.Item>
-          <Sidebar.Item icon={HiUser}>
-            <NavLink to="/product/delete">Delete Products</NavLink>
-          </Sidebar.Item>
-          <Sidebar.Item icon={HiShoppingBag}>
-            <NavLink to="/product/update">Update Products</NavLink>
-          </Sidebar.Item>
-        </Sidebar.ItemGroup>
-      </Sidebar.Items>
-    </Sidebar>
+    <aside className="w-64 bg-indigo-800 text-white h-screen p-6 flex flex-col">
+      <h2 className="text-3xl font-bold mb-8">Shop</h2>
+      <ul className="space-y-6">
+        <li>
+          <Link
+            to="/dashboard"
+            className="text-lg hover:text-indigo-300 transition duration-200"
+          >
+            Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/product"
+            className="text-lg hover:text-indigo-300 transition duration-200"
+          >
+            Products
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/product/create"
+            Create
+            Product="text-lg hover:text-indigo-300 transition duration-200"
+          >
+            Customer
+          </Link>
+        </li>
+      </ul>
+    </aside>
   );
 }
-export default LeftPanel;
+export default Sidebar;
