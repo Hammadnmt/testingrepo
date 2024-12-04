@@ -34,7 +34,7 @@ const UpdateProduct = () => {
     dispatch(updateProduct(formData));
   };
   if (isSuccess) {
-    navigate(`/product`);
+    navigate(`/admin/product`);
   }
 
   return (

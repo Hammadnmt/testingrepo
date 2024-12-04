@@ -29,7 +29,7 @@ app.use("/api/product", productrouter);
 app.use("/api/auth", authrouter);
 app.use(errorHandler);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log(`Server on http://localhost:${PORT}`);
 });
 module.exports = app;

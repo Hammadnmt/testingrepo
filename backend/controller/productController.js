@@ -61,7 +61,8 @@ const updateProduct = async (req, res, next) => {
     // console.log(name, quantity);
     if (req.body.quantity == -1) {
       delete req.body.quantity;
-    } else if (req.body.name == "") {
+    }
+    if (req.body.name == "") {
       delete req.body.name;
     }
     const productdata = await Product.findByIdAndUpdate(id, req.body, {

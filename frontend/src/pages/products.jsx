@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import TableData from "../components/Table";
 import { useState, useEffect } from "react";
 import { getAllproducts, reset } from "../features/product/productSlice";
+import { Outlet } from "react-router-dom";
 import Button from "../components/Button";
 import Loader from "../components/Loading";
 
@@ -20,19 +21,13 @@ function Products() {
       dispatch(reset());
     };
   }, [dispatch]);
-  // const onButtonClick = async (e) => {
-  //   e.preventDefault();
-  //   dispatch(getAllproducts());
-  // };
-
   return isLoading ? (
     <Loader />
   ) : (
-    <div className="products">
-      <h1>Products</h1>
-
+    <>
       <TableData />
-    </div>
+      <Outlet />
+    </>
   );
 }
 

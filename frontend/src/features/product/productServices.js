@@ -8,6 +8,7 @@ async function getProducts() {
   try {
     return await axios.get(basePath + "/"); // Return response data for the successful login
   } catch (error) {
+    console.log(error);
     // Throwing a descriptive error to be handled by the Redux action
     throw new Error(error.message || "Operation failed!");
   }

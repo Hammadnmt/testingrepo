@@ -98,7 +98,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload; // Set error message
+        state.message = action.error; // Set error message
       })
       .addCase(getProduct.pending, (state) => {
         state.isLoading = true;

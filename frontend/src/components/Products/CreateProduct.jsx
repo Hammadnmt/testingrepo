@@ -17,18 +17,16 @@ const CreateProduct = () => {
     quantityError: "",
   });
 
-  const { products, isLoading, isError, isSuccess, message } = useSelector(
+  const { isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.product
   );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isSuccess) {
-      navigate("/product");
-      dispatch(reset());
-    }
-  }, [products, isError, isLoading, isSuccess, navigate, dispatch]);
+  if (isSuccess) {
+    navigate("/admin/product");
+  }
+  console.log(isSuccess);
 
   // Simplified and reusable validation function
   const validateForm = () => {
