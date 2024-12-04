@@ -108,100 +108,100 @@ export const productSlice = createSlice({
         (state.message = "");
     },
   },
-  extraReducers: (builder) => {
-    // Handle signup
-    builder
-      .addCase(getAllproducts.pending, (state) => {
-        (state.isLoading = true),
-          (state.isError = false),
-          (state.isSuccess = false);
-      })
-      .addCase(getAllproducts.fulfilled, (state, action) => {
-        state.products = action.payload;
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-      })
-      .addCase(getAllproducts.rejected, (state, action) => {
-        state.products = [];
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.payload; // Set error message
-      })
-      .addCase(getProduct.pending, (state) => {
-        state.isLoading = true;
-        state.isError = false;
-        state.isSuccess = false;
-      })
-      .addCase(getProduct.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.products = action.payload;
-        state.isError = false;
-        state.isSuccess = true;
-      })
-      .addCase(getProduct.rejected, (state, action) => {
-        state.products = [];
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.payload; // Set error message for login
-      })
-      .addCase(createProduct.pending, (state) => {
-        state.isLoading = true;
-        state.isError = false;
-        state.isSuccess = false;
-      })
-      .addCase(createProduct.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.products = action.payload;
-        state.isError = false;
-        state.isSuccess = true;
-      })
-      .addCase(createProduct.rejected, (state, action) => {
-        state.products = [];
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.payload; // Set error message for login
-      })
-      .addCase(updateProduct.pending, (state) => {
-        state.isLoading = true;
-        state.isError = false;
-        state.isSuccess = false;
-      })
-      .addCase(updateProduct.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.message = action.payload;
-        state.isError = false;
-        state.isSuccess = true;
-      })
-      .addCase(updateProduct.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.payload;
-        console.log(state.message);
-      })
-      .addCase(deleteProduct.pending, (state) => {
-        state.isLoading = true;
-        state.isError = false;
-        state.isSuccess = false;
-      })
-      .addCase(deleteProduct.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.message = action.payload;
-        state.isError = false;
-        state.isSuccess = true;
-      })
-      .addCase(deleteProduct.rejected, (state, action) => {
-        state.products = [];
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.payload; // Set error message for login
-      });
-  },
+  // extraReducers: (builder) => {
+  //   // Handle signup
+  //   builder
+  //     .addCase(getAllproducts.pending, (state) => {
+  //       (state.isLoading = true),
+  //         (state.isError = false),
+  //         (state.isSuccess = false);
+  //     })
+  //     .addCase(getAllproducts.fulfilled, (state, action) => {
+  //       state.products = action.payload;
+  //       state.isLoading = false;
+  //       state.isError = false;
+  //       state.isSuccess = true;
+  //     })
+  //     .addCase(getAllproducts.rejected, (state, action) => {
+  //       state.products = [];
+  //       state.isLoading = false;
+  //       state.isError = true;
+  //       state.isSuccess = false;
+  //       state.message = action.payload; // Set error message
+  //     })
+  //     .addCase(getProduct.pending, (state) => {
+  //       state.isLoading = true;
+  //       state.isError = false;
+  //       state.isSuccess = false;
+  //     })
+  //     .addCase(getProduct.fulfilled, (state, action) => {
+  //       state.isLoading = false;
+  //       state.products = action.payload;
+  //       state.isError = false;
+  //       state.isSuccess = true;
+  //     })
+  //     .addCase(getProduct.rejected, (state, action) => {
+  //       state.products = [];
+  //       state.isLoading = false;
+  //       state.isError = true;
+  //       state.isSuccess = false;
+  //       state.message = action.payload; // Set error message for login
+  //     })
+  //     .addCase(createProduct.pending, (state) => {
+  //       state.isLoading = true;
+  //       state.isError = false;
+  //       state.isSuccess = false;
+  //     })
+  //     .addCase(createProduct.fulfilled, (state, action) => {
+  //       state.isLoading = false;
+  //       state.products = action.payload;
+  //       state.isError = false;
+  //       state.isSuccess = true;
+  //     })
+  //     .addCase(createProduct.rejected, (state, action) => {
+  //       state.products = [];
+  //       state.isLoading = false;
+  //       state.isError = true;
+  //       state.isSuccess = false;
+  //       state.message = action.payload; // Set error message for login
+  //     })
+  //     .addCase(updateProduct.pending, (state) => {
+  //       state.isLoading = true;
+  //       state.isError = false;
+  //       state.isSuccess = false;
+  //     })
+  //     .addCase(updateProduct.fulfilled, (state, action) => {
+  //       state.isLoading = false;
+  //       state.message = action.payload;
+  //       state.isError = false;
+  //       state.isSuccess = true;
+  //     })
+  //     .addCase(updateProduct.rejected, (state, action) => {
+  //       state.isLoading = false;
+  //       state.isError = true;
+  //       state.isSuccess = false;
+  //       state.message = action.payload;
+  //       console.log(state.message);
+  //     })
+  //     .addCase(deleteProduct.pending, (state) => {
+  //       state.isLoading = true;
+  //       state.isError = false;
+  //       state.isSuccess = false;
+  //     })
+  //     .addCase(deleteProduct.fulfilled, (state, action) => {
+  //       state.isLoading = false;
+  //       state.message = action.payload;
+  //       state.isError = false;
+  //       state.isSuccess = true;
+  //     })
+  //     .addCase(deleteProduct.rejected, (state, action) => {
+  //       state.products = [];
+  //       state.isLoading = false;
+  //       state.isError = true;
+  //       state.isSuccess = false;
+  //       state.message = action.payload; // Set error message for login
+  //     });
+  // },
 });
 
 export const { reset } = productSlice.actions;

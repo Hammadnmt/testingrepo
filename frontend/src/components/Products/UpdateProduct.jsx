@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { updateProduct, reset } from "../../features/product/productSlice";
+// import { updateProduct, reset } from "../../features/product/productSlice";
 import Button from "../Button";
 import Loader from "../Loading";
 import "../../App.css";
@@ -36,7 +36,7 @@ const UpdateProduct = () => {
     }
     if (isSuccess) {
       navigate("/product");
-      dispatch(reset());
+      // dispatch(reset());
     }
   }, [isSuccess, isLoading, navigate, dispatch]);
 
@@ -50,7 +50,7 @@ const UpdateProduct = () => {
   const onButtonClick = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      dispatch(updateProduct(formData));
+      // dispatch(updateProduct(formData));
     }
   };
 

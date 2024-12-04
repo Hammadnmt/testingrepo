@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteProduct, reset } from "../../features/product/productSlice";
+// import { deleteProduct, reset } from "../../features/product/productSlice";
 import Button from "../Button";
 import Loader from "../Loading";
 import "../../App.css";
@@ -29,14 +29,14 @@ const DeleteProduct = () => {
   useEffect(() => {
     if (isSuccess) {
       navigate("/product");
-      dispatch(reset());
+      // dispatch(reset());
     }
   }, [isSuccess, navigate, dispatch]);
   const onButtonClick = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      dispatch(deleteProduct(id));
+      // dispatch(deleteProduct(id));
     }
   };
 

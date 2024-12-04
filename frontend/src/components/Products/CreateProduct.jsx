@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { createProduct, reset } from "../../features/product/productSlice";
+// import { createProduct, reset } from "../../features/product/productSlice";
 import Button from "../Button";
 import Loader from "../Loading";
 import "../../App.css";
@@ -26,7 +26,7 @@ const CreateProduct = () => {
   useEffect(() => {
     if (isSuccess) {
       navigate("/product");
-      dispatch(reset());
+      // dispatch(reset());
     }
   }, [products, isError, isLoading, isSuccess, navigate, dispatch]);
 
@@ -61,7 +61,7 @@ const CreateProduct = () => {
 
     if (validateForm()) {
       // Dispatch signup action
-      dispatch(createProduct(formData));
+      // dispatch(createProduct(formData));
     }
   };
 
