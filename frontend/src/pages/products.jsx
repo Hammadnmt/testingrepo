@@ -6,9 +6,6 @@ import Loader from "../components/Loading";
 import "../App.css";
 
 function Products() {
-  const { data, isLoading, isSuccess, isError, error } =
-    useGetAllProductsQuery();
-
   if (isError) {
     return <div>Error: {error.message}</div>;
   }
@@ -17,7 +14,7 @@ function Products() {
   ) : (
     <div className="products">
       <h1>Products</h1>
-      <TableData products={data} />
+      <TableData />
     </div>
   );
 }
