@@ -1,34 +1,49 @@
-import { Sidebar } from "flowbite-react";
-import { NavLink } from "react-router-dom";
-import {
-  HiChartPie,
-  HiInbox,
-  HiShoppingBag,
-  HiUser,
-  HiViewBoards,
-} from "react-icons/hi";
-
-export function LeftPanel() {
+/* eslint-disable no-unused-vars */
+import Button from "./Button";
+import { Link, useNavigate } from "react-router-dom";
+import { useLogoutUserMutation } from "../features/auth/authSlice";
+function Sidebar() {
+  const navigate = useNavigate();
+  const [logoutUser, { isError, isLoading, isSuccess }] =
+    useLogoutUserMutation();
+  async function logoutButton() {
+    await logoutUser();
+    if (isSuccess) {
+      navigate("/login");
+    }
+  }
   return (
-    <Sidebar aria-label="Default sidebar example">
-      <Sidebar.Items>
-        <Sidebar.ItemGroup>
-          <Sidebar.Item icon={HiChartPie}>Dashboard</Sidebar.Item>
-          <Sidebar.Item icon={HiViewBoards}>
-            <NavLink to="/product">Products</NavLink>
-          </Sidebar.Item>
-          <Sidebar.Item icon={HiInbox}>
-            <NavLink to="/product/create">Create Product</NavLink>
-          </Sidebar.Item>
-          <Sidebar.Item icon={HiUser}>
-            <NavLink to="/product/delete">Delete Products</NavLink>
-          </Sidebar.Item>
-          <Sidebar.Item icon={HiShoppingBag}>
-            <NavLink to="/product/update">Update Products</NavLink>
-          </Sidebar.Item>
-        </Sidebar.ItemGroup>
-      </Sidebar.Items>
-    </Sidebar>
+    <aside className="w-64 bg-indigo-800 text-white h-screen p-6 flex flex-col">
+      <h2 className="text-3xl font-bold mb-8">Shop</h2>
+      <ul className="space-y-6">
+        <li>
+          <Link
+            to="/admin/dashboard"
+            className="text-lg hover:text-indigo-300 transition duration-200"
+          >
+            Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/product"
+            className="text-lg hover:text-indigo-300 transition duration-200"
+          >
+            Products
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/product/create"
+            Create
+            Product="text-lg hover:text-indigo-300 transition duration-200"
+          >
+            Customer
+          </Link>
+        </li>
+        <Button onClick={logoutButton} desc={"Logout"} />
+      </ul>
+    </aside>
   );
 }
-export default LeftPanel;
+export default Sidebar;
