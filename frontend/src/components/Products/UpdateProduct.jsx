@@ -7,11 +7,11 @@ import Button from "../Button";
 import Loader from "../Loading";
 import "../../App.css";
 const UpdateProduct = () => {
-  const { id } = useParams();
+  const { id,name,quantity } = useParams();
   const [formData, setFormData] = useState({
     id: id,
-    name: "",
-    quantity: -1,
+    name,
+    quantity,
   });
 
   // const [idErrors, setIDError] = useState("");
@@ -38,43 +38,33 @@ const UpdateProduct = () => {
   }
 
   return (
-    <div className={"mainContainer"}>
+    // <div className="flex flex-row justify-center">
+    <div className="flex flex-col items-center justify-center h-screen content-center	">
       <div className={"titleContainer"}>
         <div>Update product</div>
       </div>
       <br />
-      <div className={"inputContainer"}>
-        <input
-          name="id"
-          value={formData.id}
-          placeholder="Enter product id here"
-          onChange={handleChange}
-          className={"inputBox"}
-        />
-        {/* <label className="errorLabel">{idErrors}</label> */}
-      </div>
-      <br />
-      <div className={"inputContainer"}>
+      <div className="align-start justify-center">
         <input
           name="name"
           value={formData.name}
           placeholder="Enter name here"
           onChange={handleChange}
-          className={"inputBox"}
+          className={"w-96	 text-lg	rounded-s-lg	border-solid 	border-8"}
         />
       </div>
       <br />
-      <div className={"inputContainer"}>
+      <div className={"align-start justify-center "}>
         <input
           name="quantity"
           value={formData.quantity}
           placeholder="Enter quantity here"
           type="number"
           onChange={handleChange}
-          className={"inputBox"}
+          className={"w-96 text-lg rounded-s-lg	border-solid	border-8	"}
         />
       </div>
-      <div className={"inputContainer"}>
+      <div className={""}>
         <Button onClick={onButtonClick} desc={"Update"} />
         {isError && <div className="errorLabel">{message}</div>}
       </div>

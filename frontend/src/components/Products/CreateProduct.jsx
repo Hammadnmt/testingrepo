@@ -74,34 +74,38 @@ const CreateProduct = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <div className={"mainContainer"}>
+    <div
+      className={
+        "flex flex-col items-center justify-center h-screen content-center"
+      }
+    >
       <div className={"titleContainer"}>
         <div>Create New product</div>
       </div>
       <br />
-      <div className={"inputContainer"}>
+      <div className={"align-start justify-center"}>
         <input
           name="name"
           value={formData.name}
           placeholder="Enter product name here"
           onChange={handleChange}
-          className={"inputBox"}
+          className={"w-96	 text-lg	rounded-s-lg	border-solid 	border-8"}
         />
         <label className="errorLabel">{formErrors.nameError}</label>
       </div>
       <br />
-      <div className={"inputContainer"}>
+      <div className={"align-start justify-center"}>
         <input
           name="quantity"
           value={formData.quantity}
           placeholder="Enter quantity here"
           onChange={handleChange}
-          className={"inputBox"}
+          className={"w-96	 text-lg	rounded-s-lg	border-solid 	border-8"}
         />
         <label className="errorLabel">{formErrors.quantityError}</label>
       </div>
       <br />
-      <div className={"inputContainer"}>
+      <div className={"align-start justify-center"}>
         <Button onClick={onButtonClick} desc={"Create"} />
         <label className="errorLabel">{message}</label>{" "}
       </div>

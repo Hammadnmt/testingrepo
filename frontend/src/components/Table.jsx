@@ -20,14 +20,10 @@ export default function TableData() {
   );
 
   useEffect(() => {
-    if(isLoading){
+    if (isLoading) {
       return <Loader />;
     }
   }, []);
-
-  if (isError) {
-    return <p className="text-red-600">Error: {message}</p>;
-  }
 
   return (
     <>
@@ -55,7 +51,9 @@ export default function TableData() {
                   <div className="flex flex-col gap-2">
                     <button
                       onClick={() =>
-                        navigate(`/admin/product/update/${product._id}`)
+                        navigate(
+                          `/admin/product/update/${product._id}/${product.name}/${product.quantity}`
+                        )
                       }
                     >
                       <EditIcon style={{ fontSize: 20 }} />
