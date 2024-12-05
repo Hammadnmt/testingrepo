@@ -1,8 +1,7 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";  
 
 const ProtectedRoute = () => {
-  const { user } = useSelector((state) => state.auth);
+  const user = JSON.parse(localStorage.getItem("user"));
   console.log(user);
   return user ? (
     user.role == "Admin" ? (

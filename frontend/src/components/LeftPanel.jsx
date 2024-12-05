@@ -32,15 +32,6 @@ function Sidebar() {
             Products
           </Link>
         </li>
-        <li>
-          <Link
-            to="/admin/product/create"
-            Create
-            Product="text-lg hover:text-indigo-300 transition duration-200"
-          >
-            Customer
-          </Link>
-        </li>
         <Button onClick={logoutButton} desc={"Logout"} />
       </ul>
     </aside>
