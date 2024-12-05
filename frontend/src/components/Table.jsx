@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 
 
 
-export default function TableData({ products }) {
+export default function TableData({ data }) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">

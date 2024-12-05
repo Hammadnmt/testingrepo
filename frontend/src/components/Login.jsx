@@ -1,19 +1,14 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  useLoginUserMutation,
-  setUser,
-  reset,
-} from "../features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useLoginUserMutation } from "../features/auth/authSlice";
 import Button from "./Button";
 import Loader from "./Loading";
-import { store } from "../store/store";
-import { loggingAndDispatch } from "../middleware/logging";
 import "../App.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [loginUser, { isLoading, isSuccess, error }] = useLoginUserMutation();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,40 +18,6 @@ const Login = () => {
     emailError: "",
     passwordError: "",
   });
-  const [loginUser, { isLoading, isSuccess, data, error }] =
-    useLoginUserMutation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { user } = useSelector((state) => state.auth);
-  // console.log(user);
-  useEffect(() => {
-    if (user) {
-      // Clear form data and navigate to dashboard
-      setFormData({
-        email: "",
-        password: "",
-      });
-      // dispatch(reset());
-    }
-    if (isLoading) {
-      <Loader />;
-    }
-    if (error) {
-      // If there's an error, show the error message
-      // setFormErrors({ ...formErrors, });
-      loggingAndDispatch(store, reset()); // Reset the state after showing error
-    }
-  }, [
-    user,
-    error,
-    isLoading,
-    isSuccess,
-    dispatch,
-    navigate,
-    formErrors,
-    setFormErrors,
-  ]);
 
   const onButtonClick = async (e) => {
     e.preventDefault();
@@ -92,11 +53,11 @@ const Login = () => {
         password: formData.password,
       };
       try {
-        const response = await loginUser(formData).unwrap();
-        dispatch(setUser(response));
-        console.log(user);
-        navigate("/dashboard");
-      } catch (error) {
+        await loginUser(data).unwrap();
+        if (isSuccess) {
+          navigate("/admin/dashboard");
+        }
+      } catch (err) {
         console.log(error);
       }
     }
@@ -141,7 +102,6 @@ const Login = () => {
       </div>
       <br />
       <div className={"inputContainer"}>
-        {/* {formErrors.passwordError || message} */}
         <Button onClick={onButtonClick} desc="Log in" />
         <label className="errorLabel"></label>
       </div>

@@ -20,8 +20,6 @@ const authApi = baseApi.injectEndpoints({
         body: credentials, // Send user credentials
       }),
       transformResponse: (response, meta, arg) => {
-        // console.log("Raw response from API:", response);
-        // Store user data in localStorage
         localStorage.setItem("user", JSON.stringify(response));
         return response;
       },
@@ -29,16 +27,16 @@ const authApi = baseApi.injectEndpoints({
     }),
     registerUser: builder.mutation({
       query: (userdata) => ({
-        url: "/auth/signup", // API endpoint for signup
+        url: "/auth/signup",
         method: "POST",
-        body: userdata, // Send user registration data
+        body: userdata,
       }),
       transformResponse: (response, meta, arg) => response.data,
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
     logoutUser: builder.mutation({
       query: () => ({
-        url: "/auth/logout", // API endpoint for logout
+        url: "/auth/logout",
         method: "POST",
       }),
       transformResponse: (response, meta, arg) => response.data,

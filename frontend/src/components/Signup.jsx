@@ -1,10 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useRegisterUserMutation, reset } from "../features/auth/authSlice";
-import { loggingAndDispatch } from "../middleware/logging";
-import { store } from "../store/store";
+import { useRegisterUserMutation } from "../features/auth/authSlice";
 import Button from "./Button";
 import Loader from "./Loading";
 import "../App.css";
@@ -24,27 +21,9 @@ const Signup = () => {
   });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [registerUser, { isLoading, isSuccess, data, error }] =
+  const [registerUser, { isLoading, isSuccess, error }] =
     useRegisterUserMutation();
 
-  useEffect(() => {
-    if (isSuccess) {
-      // Clear form data and navigate to dashboard
-      setFormData({
-        email: "",
-        password: "",
-      });
-    }
-    if (isLoading) {
-      <Loader />;
-    }
-    if (error) {
-      loggingAndDispatch(store, reset()); // Reset the state after showing error
-    }
-  }, [isLoading, error, isSuccess, navigate, dispatch]);
-
-  // Simplified and reusable validation function
   const validateForm = () => {
     let isValid = true;
     const newFormErrors = { ...formErrors };
@@ -82,20 +61,19 @@ const Signup = () => {
     } else {
       newFormErrors.roleError = "";
     }
-
     setFormErrors(newFormErrors);
     return isValid;
   };
 
   const onButtonClick = async (e) => {
     e.preventDefault();
-
     if (validateForm()) {
-      // Dispatch signup action
       try {
         await registerUser(formData).unwrap();
-        navigate("/login");
-      } catch (error) {
+        if (isSuccess) {
+          navigate("/login");
+        }
+      } catch (err) {
         console.log(error);
       }
     }

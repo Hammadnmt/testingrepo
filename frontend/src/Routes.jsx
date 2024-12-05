@@ -13,10 +13,9 @@ import ProtectedRoute from "./components/ProtectedRoutes";
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* Public Routes */}9 9
-      <Route path="/" element={<App />} />
+      {/* Public Routes */}9 9{/* <Route path="/" element={<App />} /> */}
       <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/" element={<Signup />} />
       <Route path="" element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/product" element={<Products />} />
