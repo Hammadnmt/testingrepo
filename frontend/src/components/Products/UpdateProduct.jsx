@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,15 +13,32 @@ const UpdateProduct = () => {
     name: "",
     quantity: "",
   });
+=======
+// /* eslint-disable no-unused-vars */
+// import { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { useSelector, useDispatch } from "react-redux";
+// import { updateProduct, reset } from "../../features/product/productSlice";
+// import Button from "../Button";
+// import Loader from "../Loading";
+// import "../../App.css";
+// const UpdateProduct = () => {
+//   const [formData, setFormData] = useState({
+//     id: "",
+//     name: "",
+//     quantity: "",
+//   });
+>>>>>>> 9b66398ff747e4e7865249bfd246343b4c174f0f
 
-  const [idErrors, setIDError] = useState("");
+//   const [idErrors, setIDError] = useState("");
 
-  const { isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.product
-  );
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+//   const { isLoading, isError, isSuccess, message } = useSelector(
+//     (state) => state.product
+//   );
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch();
 
+<<<<<<< HEAD
   // Simplified and reusable validation function
   const validateForm = () => {
     let isValid = true;
@@ -53,52 +71,86 @@ const UpdateProduct = () => {
       // dispatch(updateProduct(formData));
     }
   };
+=======
+//   // Simplified and reusable validation function
+//   const validateForm = () => {
+//     let isValid = true;
+//     if (!formData.id) {
+//       setIDError("Enter id");
+//       isValid = false;
+//     }
+//     return isValid;
+//   };
+//   useEffect(() => {
+//     if (isLoading) {
+//       <Loader />;
+//     }
+//     if (isSuccess) {
+//       navigate("/product");
+//       dispatch(reset());
+//     }
+//   }, [isSuccess, isLoading, navigate, dispatch]);
 
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <div className={"mainContainer"}>
-      <div className={"titleContainer"}>
-        <div>Update product</div>
-      </div>
-      <br />
-      <div className={"inputContainer"}>
-        <input
-          name="id"
-          value={formData.id}
-          placeholder="Enter product id here"
-          onChange={handleChange}
-          className={"inputBox"}
-        />
-        <label className="errorLabel">{idErrors}</label>
-      </div>
-      <br />
-      <div className={"inputContainer"}>
-        <input
-          name="name"
-          value={formData.name}
-          placeholder="Enter name here"
-          onChange={handleChange}
-          className={"inputBox"}
-        />
-      </div>
-      <br />
-      <div className={"inputContainer"}>
-        <input
-          name="quantity"
-          value={formData.quantity}
-          placeholder="Enter quantity here"
-          onChange={handleChange}
-          className={"inputBox"}
-        />
-      </div>
-      <div className={"inputContainer"}>
-        <Button onClick={onButtonClick} desc={"Create"} />
-        {isError && <div className="errorLabel">{message}</div>}
-      </div>
-      <br />
-    </div>
-  );
-};
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prevData) => ({
+//       ...prevData,
+//       [name]: value,
+//     }));
+//   };
+//   const onButtonClick = async (e) => {
+//     e.preventDefault();
+//     if (validateForm()) {
+//       dispatch(updateProduct(formData));
+//     }
+//   };
+>>>>>>> 9b66398ff747e4e7865249bfd246343b4c174f0f
 
-export default UpdateProduct;
+//   return isLoading ? (
+//     <Loader />
+//   ) : (
+//     <div className={"mainContainer"}>
+//       <div className={"titleContainer"}>
+//         <div>Update product</div>
+//       </div>
+//       <br />
+//       <div className={"inputContainer"}>
+//         <input
+//           name="id"
+//           value={formData.id}
+//           placeholder="Enter product id here"
+//           onChange={handleChange}
+//           className={"inputBox"}
+//         />
+//         <label className="errorLabel">{idErrors}</label>
+//       </div>
+//       <br />
+//       <div className={"inputContainer"}>
+//         <input
+//           name="name"
+//           value={formData.name}
+//           placeholder="Enter name here"
+//           onChange={handleChange}
+//           className={"inputBox"}
+//         />
+//       </div>
+//       <br />
+//       <div className={"inputContainer"}>
+//         <input
+//           name="quantity"
+//           value={formData.quantity}
+//           placeholder="Enter quantity here"
+//           onChange={handleChange}
+//           className={"inputBox"}
+//         />
+//       </div>
+//       <div className={"inputContainer"}>
+//         <Button onClick={onButtonClick} desc={"Create"} />
+//         {isError && <div className="errorLabel">{message}</div>}
+//       </div>
+//       <br />
+//     </div>
+//   );
+// };
+
+// export default UpdateProduct;

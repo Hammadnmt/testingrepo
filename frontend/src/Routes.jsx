@@ -4,8 +4,8 @@ import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import CreateProduct from "./components/Products/CreateProduct";
-import DeleteProduct from "./components/Products/DeleteProduct";
-import UpdateProduct from "./components/Products/UpdateProduct";
+// import DeleteProduct from "./components/Products/DeleteProduct";
+// import UpdateProduct from "./components/Products/UpdateProduct";
 import App from "./App";
 import Products from "./pages/products";
 import ProtectedRoute from "./components/ProtectedRoutes";
@@ -20,9 +20,9 @@ const AppRoutes = () => {
       <Route path="" element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/product" element={<Products />} />
-        <Route path="/product/update" element={<UpdateProduct />} />
         <Route path="/product/create" element={<CreateProduct />} />
-        <Route path="/product/delete" element={<DeleteProduct />} />
+        {/* <Route path="/product/update" element={<UpdateProduct />} />
+        <Route path="/product/delete" element={<DeleteProduct />} /> */}
       </Route>
     </Routes>
   );

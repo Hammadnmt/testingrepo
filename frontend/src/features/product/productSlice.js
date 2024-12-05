@@ -10,71 +10,14 @@ const initialState = {
   message: "",
 };
 
-// export const createProduct = createAsyncThunk(
-//   "product/createProduct",
-//   async (productData, thunkApi) => {
-//     try {
-//       return await productServices.createNewProduct(productData); // Call to auth service for registration
-//     } catch (error) {
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-// export const getAllproducts = createAsyncThunk(
-//   "product/getAll",
-//   async (thunkApi) => {
-//     try {
-//       return await productServices.getProducts(); // Call to auth service for registration
-//       // return await response.json();
-//     } catch (error) {
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-// export const getProduct = createAsyncThunk(
-//   "product/getById",
-//   async (id, thunkApi) => {
-//     try {
-//       return await productServices.getProductById(id); // Call to auth service for registration
-//     } catch (error) {
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-// export const updateProduct = createAsyncThunk(
-//   "product/updateById",
-//   async (data, thunkApi) => {
-//     try {
-//       return await productServices.updateProductByid(data); // Call to auth service for registration
-//     } catch (error) {
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-// export const deleteProduct = createAsyncThunk(
-//   "product/deleteById",
-//   async (id, thunkApi) => {
-//     try {
-//       return await productServices.deleteProductByid(id); // Call to auth service for registration
-//     } catch (error) {
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-const authApi = baseApi.injectEndpoints({
+const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllproducts: builder.query({
+    getAllProducts: builder.query({
       query: () => ({
-        url: "/product/", // API endpoint for login
-        method: "GET", // POST method for sending data
+        url: "/product/",
+        method: "GET",
       }),
       transformResponse: (response, meta, arg) => response.data.data,
-      transformErrorResponse: (response, meta, arg) => response.status,
     }),
     deleteProduct: builder.mutation({
       query: (id) => ({
@@ -82,15 +25,29 @@ const authApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
       transformResponse: (response, meta, arg) => response.data,
-      transformErrorResponse: (response, meta, arg) => response.status,
+    }),
+    getProductById: builder.query({
+      query: (id) => ({
+        url: `/product/${id}`, // API endpoint for signup
+        method: "GET",
+      }),
+      transformResponse: (response, meta, arg) => response.data.data,
     }),
     updateProduct: builder.mutation({
-      query: (id) => ({
+      query: ({ id, data }) => ({
         url: `/product/${id}`, // API endpoint for logout
-        method: "POST",
+        method: "PATCH",
+        body: data,
       }),
       transformResponse: (response, meta, arg) => response.data,
-      transformErrorResponse: (response, meta, arg) => response.status,
+    }),
+    createProduct: builder.mutation({
+      query: (data) => ({
+        url: `/product/`, // API endpoint for logout
+        method: "POST",
+        body: data,
+      }),
+      transformResponse: (response, meta, arg) => response.data.data,
     }),
   }),
 });
@@ -101,11 +58,14 @@ export const productSlice = createSlice({
   reducers: {
     // Reset state
     reset: (state) => {
-      (state.products = []),
-        (state.isLoading = false),
-        (state.isError = false),
-        (state.isSuccess = false),
-        (state.message = "");
+      state.products = [];
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    },
+    setProducts: (state, data) => {
+      state.products = data.payload;
     },
   },
   // extraReducers: (builder) => {
@@ -204,6 +164,11 @@ export const productSlice = createSlice({
   // },
 });
 
-export const { reset } = productSlice.actions;
-
+export const { reset, setProducts } = productSlice.actions;
+export const {
+  useGetAllProductsQuery,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+  useCreateProductMutation,
+} = productApi;
 export default productSlice.reducer;
