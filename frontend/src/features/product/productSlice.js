@@ -1,14 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { baseApi } from "../baseApi";
 
-const productApi = baseApi.injectEndpoints({
+export const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: () => ({
-        url: "/product/",
+        url: "product/",
         method: "GET",
       }),
-      transformResponse: (response, meta, arg) => response.data.data,
+      transformResponse: (response, meta, arg) => {
+        console.log(response);
+        return response.data;
+      },
     }),
     deleteProduct: builder.mutation({
       query: (id) => ({
@@ -19,14 +22,14 @@ const productApi = baseApi.injectEndpoints({
     }),
     getProductById: builder.query({
       query: (id) => ({
-        url: `/product/${id}`,
+        url: `product/${id}`,
         method: "GET",
       }),
       transformResponse: (response, meta, arg) => response.data.data,
     }),
     updateProduct: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/product/${id}`,
+        url: `product/${id}`,
         method: "PATCH",
         body: data,
       }),
@@ -34,11 +37,14 @@ const productApi = baseApi.injectEndpoints({
     }),
     createProduct: builder.mutation({
       query: (data) => ({
-        url: `/product/`, // API endpoint for logout
+        url: "product/",
         method: "POST",
         body: data,
       }),
-      transformResponse: (response, meta, arg) => response.data.data,
+      transformResponse: (response, meta, arg) => {
+        console.log(response.data);
+        return response.data;
+      },
     }),
   }),
 });

@@ -20,7 +20,6 @@ const CreateProduct = () => {
     quantityError: "",
   });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const validateForm = () => {
     let isValid = true;
@@ -52,15 +51,16 @@ const CreateProduct = () => {
 
     if (validateForm()) {
       try {
-        await createProduct(FormData);
-        if (isSuccess()) {
-          navigate("/admin/product");
-        }
+        await createProduct(formData).unwrap();
       } catch (err) {
-        console.error(error);
+        console.log(err);
       }
     }
   };
+  // if(isSuccess) {
+  //   navigate("/admin/product");
+  // }
+  console.log(data)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -102,7 +102,7 @@ const CreateProduct = () => {
       <br />
       <div className={"inputContainer"}>
         <Button onClick={onButtonClick} desc={"Create"} />
-        <label className="errorLabel">{error.message}</label>{" "}
+        {/* <label className="errorLabel">{error.message}</label>{" "} */}
       </div>
       <br />
     </div>

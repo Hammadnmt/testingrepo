@@ -19,9 +19,9 @@ mongoose
     console.log(err);
   });
 
-app.use(express.json());
 app.use(validateJsonBody);
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cookieParser());
 app.use(morgen("dev"));
 
@@ -29,7 +29,7 @@ app.use("/api/product", productrouter);
 app.use("/api/auth", authrouter);
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+app.listen(5000, () => {
   console.log(`Server on http://localhost:${PORT}`);
 });
 module.exports = app;

@@ -8,7 +8,8 @@ import "../App.css";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [loginUser, { isLoading, isSuccess, error }] = useLoginUserMutation();
+  const [loginUser, { isLoading, isSuccess, data, error }] =
+    useLoginUserMutation();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -53,12 +54,10 @@ const Login = () => {
         password: formData.password,
       };
       try {
-        await loginUser(data).unwrap();
-        if (isSuccess) {
-          navigate("/admin/dashboard");
-        }
+        const response = await loginUser(data).unwrap();
+        navigate("/admin/dashboard");
       } catch (err) {
-        console.log(error);
+        console.log(err);
       }
     }
   };

@@ -21,7 +21,7 @@ const Signup = () => {
   });
 
   const navigate = useNavigate();
-  const [registerUser, { isLoading, isSuccess, error }] =
+  const [registerUser, { isLoading, isSuccess, error, data }] =
     useRegisterUserMutation();
 
   const validateForm = () => {
@@ -66,18 +66,18 @@ const Signup = () => {
   };
 
   const onButtonClick = async (e) => {
-    e.preventDefault();
     if (validateForm()) {
       try {
         await registerUser(formData).unwrap();
-        if (isSuccess) {
-          navigate("/login");
-        }
       } catch (err) {
-        console.log(error);
+        console.log(err);
       }
     }
   };
+  if (isSuccess) {
+    console.log(data);
+    navigate("/login");
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;

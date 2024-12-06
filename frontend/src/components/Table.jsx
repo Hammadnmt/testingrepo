@@ -1,9 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {
-  useDeleteProductMutation,
-  useGetAllProductsQuery,
-} from "../features/product/productSlice";
+import { useGetAllProductsQuery } from "../features/product/productSlice";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Loader from "../components/Loading";
@@ -12,16 +9,19 @@ import EditIcon from "@mui/icons-material/Edit";
 
 export default function TableData() {
   const navigate = useNavigate();
-  const { data, isLoading, isSuccess, isError, error } =
+  const { data, isLoading, isSuccess, isFetching, isError, error } =
     useGetAllProductsQuery();
-
-  return (
+  console.log(data);
+  // console.log(data);
+  return isLoading && isFetching ? (
+    <Loader />
+  ) : (
     <>
       <Button
         onClick={() => navigate("/admin/product/create")}
         desc={"Add Product"}
       />
-      {data.length > 0 ? (
+      {data ? (
         <table className="table-auto w-full border-separate border-spacing-4">
           <thead className="bg-indigo-600 text-white">
             <tr>

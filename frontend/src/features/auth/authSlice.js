@@ -11,7 +11,7 @@ const authApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response, meta, arg) => {
         localStorage.setItem("user", JSON.stringify(response));
-        return response;
+        return response.data;
       },
       transformErrorResponse: (response, meta, arg) => response.error,
     }),
@@ -21,8 +21,7 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: userdata,
       }),
-      transformResponse: (response, meta, arg) => response.data,
-      transformErrorResponse: (response, meta, arg) => response.error,
+      transformResponse: (response, meta, arg) => response.message,
     }),
     logoutUser: builder.mutation({
       query: () => ({
