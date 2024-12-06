@@ -7,7 +7,7 @@ import Button from "../Button";
 import Loader from "../Loading";
 import "../../App.css";
 const UpdateProduct = () => {
-  const { id,name,quantity } = useParams();
+  const { id, name, quantity } = useParams();
   const [formData, setFormData] = useState({
     id: id,
     name,
@@ -66,7 +66,6 @@ const UpdateProduct = () => {
       </div>
       <div className={""}>
         <Button onClick={onButtonClick} desc={"Update"} />
-        {isError && <div className="errorLabel">{message}</div>}
       </div>
       <br />
     </div>

@@ -4,7 +4,7 @@ const Button = ({ onClick, desc }) => {
   return (
     <button
       onClick={onClick}
-      className="relative inline-flex items-center justify-center px-8 py-2.5 overflow-hidden tracking-tighter text-white bg-gray-800 rounded-md group"
+      className="relative flex items-center justify-center px-5 py-2.5 my-4 mx-1 overflow-hidden tracking-tighter text-white bg-gray-800 rounded-md group"
     >
       <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-orange-600 rounded-full group-hover:w-56 group-hover:h-56"></span>
       <span className="absolute bottom-0 left-0 h-full -ml-2">

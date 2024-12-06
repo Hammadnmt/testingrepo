@@ -1,33 +1,45 @@
-"use client";
+import { Link } from "react-router-dom";
+import Button from "./Button";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { Button, Navbar } from "flowbite-react";
+import { logout, reset } from "../features/auth/authSlice";
 
-export function NavBar() {
+export default function NavBar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function logoutButton() {
+    dispatch(logout());
+    navigate("/login");
+    dispatch(reset());
+  }
+
   return (
-    <Navbar fluid rounded>
-      <Navbar.Brand href="https://flowbite-react.com">
-        <img
-          src="/favicon.svg"
-          className="mr-3 h-6 sm:h-9"
-          alt="Flowbite React Logo"
+    <ul className="flex sm:hidden flex-col gap-2 fixed z-40 top-0 right-0 p-4 bg-gray-800 text-white shadow-lg">
+      <li>
+        <Link
+          to="/admin/dashboard"
+          className="text-lg hover:text-indigo-300 transition duration-200"
+        >
+          Dashboard
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/admin/product"
+          className="text-lg hover:text-indigo-300 transition duration-200"
+        >
+          Products
+        </Link>
+      </li>
+      <li>
+        <Button
+          onClick={logoutButton}
+          desc={"Logout"}
+          className="bg-red-500 hover:bg-red-600 transition text-white rounded-md px-4 py-2"
         />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Flowbite React
-        </span>
-      </Navbar.Brand>
-      <div className="flex md:order-2">
-        <Button>Get started</Button>
-        <Navbar.Toggle />
-      </div>
-      <Navbar.Collapse>
-        <Navbar.Link href="#" active>
-          Home
-        </Navbar.Link>
-        <Navbar.Link href="#">About</Navbar.Link>
-        <Navbar.Link href="#">Services</Navbar.Link>
-        <Navbar.Link href="#">Pricing</Navbar.Link>
-        <Navbar.Link href="#">Contact</Navbar.Link>
-      </Navbar.Collapse>
-    </Navbar>
+      </li>
+    </ul>
   );
 }

@@ -32,10 +32,10 @@ export default function TableData() {
         desc={"Add Product"}
       />
       {products.length > 0 ? (
-        <table className="table-auto w-full border-separate border-spacing-4">
-          <thead className="bg-indigo-600 text-white">
+        <table className="overflow-scroll table-auto w-full border-separate border-spacing-4">
+          <thead className="bg-fuchsia-800 text-white">
             <tr>
-              <th className="px-6 py-3 text-left">ID</th>
+              <th className="md:px-6 md:py-3 md:text-left">ID</th>
               <th className="px-6 py-3 text-left">Name</th>
               <th className="px-6 py-3 text-left">Quantity</th>
               <th className="px-6 py-3 text-left">Action</th>
@@ -43,8 +43,8 @@ export default function TableData() {
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product._id} className="hover:bg-gray-100">
-                <td className="px-6 py-4">{product._id}</td>
+              <tr key={product._id} className="hover:bg-gray-100 ">
+                <td className="px-6 py-4 md:shrink-1">{product._id}</td>
                 <td className="px-6 py-4">{product.name}</td>
                 <td className="px-6 py-4">{product.quantity}</td>
                 <td className="px-6 py-4">

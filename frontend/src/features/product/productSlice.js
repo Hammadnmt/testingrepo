@@ -151,7 +151,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload;
+        state.message = action.payload
         console.log(state.message);
       })
       .addCase(deleteProduct.pending, (state) => {

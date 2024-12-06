@@ -1,22 +1,42 @@
-import Button from "./Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
+import NavBar from "./NavBar";
+import Button from "./Button";
+import { useState } from "react";
+
 function Sidebar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  function logoutButton() {
-    dispatch(logout());
-    navigate("/login");
-    dispatch(reset());
-    // <Navigate to="/login" />;
+  const [display, setDisplay] = useState(false);
 
-    // Navigate to login page or reset the state if needed.
-  }
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/login");
+  };
+
   return (
-    <aside className="w-64 bg-indigo-800 text-white h-screen p-6 flex flex-col">
+    <div className="w-full overflow-visible md:w-64 bg-fuchsia-950 text-white p-6 flex md:flex-col gap-6">
       <h2 className="text-3xl font-bold mb-8">Shop</h2>
-      <ul className="space-y-6">
+      {display ? (
+        <NavBar />
+      ) : (
+        <svg
+          onClick={() => setDisplay(true)}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 50 50"
+          className="sm:hidden cursor-pointer"
+          width="30px"
+          height="30px"
+          fill="#FFF"
+        >
+          <path d="M 0 9 L 0 11 L 50 11 L 50 9 Z M 0 24 L 0 26 L 50 26 L 50 24 Z M 0 39 L 0 41 L 50 41 L 50 39 Z" />
+        </svg>
+      )}
+
+      {/* Sidebar Links */}
+      <ul className="hidden sm:flex md:flex-col gap-4 sm:gap-6 text-white items-center md:items-start">
         <li>
           <Link
             to="/admin/dashboard"
@@ -36,15 +56,17 @@ function Sidebar() {
         <li>
           <Link
             to="/admin/product/create"
-            Create
-            Product="text-lg hover:text-indigo-300 transition duration-200"
+            className="text-lg hover:text-indigo-300 transition duration-200"
           >
-            Customer
+            Create Product
           </Link>
         </li>
-        <Button onClick={logoutButton} desc={"Logout"} />
+        <li>
+          <Button onClick={handleLogout} desc="Logout" />
+        </li>
       </ul>
-    </aside>
+    </div>
   );
 }
+
 export default Sidebar;

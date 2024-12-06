@@ -79,7 +79,11 @@ const CreateProduct = () => {
         "flex flex-col items-center justify-center h-screen content-center"
       }
     >
-      <div className={"titleContainer"}>
+      <div
+        className={
+          "flex flex-col items-center content-center text-2xl font-bold "
+        }
+      >
         <div>Create New product</div>
       </div>
       <br />
@@ -91,7 +95,10 @@ const CreateProduct = () => {
           onChange={handleChange}
           className={"w-96	 text-lg	rounded-s-lg	border-solid 	border-8"}
         />
-        <label className="errorLabel">{formErrors.nameError}</label>
+        <br />
+        <label className="flex flex-col items-center text-red-700">
+          {formErrors.nameError}
+        </label>
       </div>
       <br />
       <div className={"align-start justify-center"}>
@@ -102,7 +109,10 @@ const CreateProduct = () => {
           onChange={handleChange}
           className={"w-96	 text-lg	rounded-s-lg	border-solid 	border-8"}
         />
-        <label className="errorLabel">{formErrors.quantityError}</label>
+        <br />
+        <label className="flex flex-col items-center text-red-700">
+          {formErrors.quantityError}
+        </label>
       </div>
       <br />
       <div className={"align-start justify-center"}>
